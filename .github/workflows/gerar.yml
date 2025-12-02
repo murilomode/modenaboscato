@@ -14,24 +14,25 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # --- O NOVO TRUQUE (KIT COMPLETO) ---
-      - name: Baixar Kit Completo (Bandeiras + Arquivos)
+      - name: Baixar Ingredientes Frescos (Forçar Substituição)
         run: |
-          # Baixa o código original do bot que tem tudo
+          # 1. Baixa o código original
           wget https://github.com/antooro/FlagsMashupBot/archive/refs/heads/master.zip -O kit.zip
           unzip -q kit.zip
           
-          # Copia TUDO (bandeiras, colors, countries) para a pasta principal
-          # O -n impede que ele apague seu cook.py se tiver conflito
-          cp -rn FlagsMashupBot-master/* .
+          # 2. MODO TRATOR: Copia tudo por cima do que já existe (-f = force)
+          # Isso garante que formatsvg.py e countries estejam perfeitos
+          cp -rf FlagsMashupBot-master/* .
           
-          # Garante que a pasta flags está no lugar certo
-          if [ -d "FlagsMashupBot-master/flags" ]; then cp -r FlagsMashupBot-master/flags .; fi
+          # 3. Garante a pasta de bandeiras
+          if [ -d "FlagsMashupBot-master/flags" ]; then cp -rf FlagsMashupBot-master/flags .; fi
           
-          # Limpeza
+          # 4. Limpeza
           rm kit.zip
           rm -rf FlagsMashupBot-master
-          echo "Ingredientes baixados com sucesso!"
+          
+          # 5. Lista os arquivos só para termos certeza no log (opcional, para debug)
+          ls -F
 
       - name: Instalar Dependências do Linux
         run: |
@@ -48,7 +49,6 @@ jobs:
           pip install pycairo
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      # Roda o nosso cozinheiro
       - name: Rodar o Cook
         run: python cook.py
 
