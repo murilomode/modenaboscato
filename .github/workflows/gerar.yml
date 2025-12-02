@@ -1,0 +1,46 @@
+name: Gerar Bandeiras
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Roda todo dia à meia-noite
+  workflow_dispatch: # Permite rodar clicando no botão manualmente
+
+permissions:
+  contents: write # Permite salvar as imagens geradas no repositório
+
+jobs:
+  cozinhar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      # Instala o Cairo (ferramenta gráfica do Linux necessária para desenhar)
+      - name: Instalar Dependências do Linux
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcairo2-dev pkg-config python3-dev
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      # Instala as bibliotecas de Python necessárias
+      - name: Instalar Bibliotecas
+        run: |
+          pip install pycairo
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f requirements ]; then pip install -r requirements; fi
+
+      # AQUI ESTÁ A MUDANÇA: Chamamos o cook.py
+      - name: Rodar o Cook
+        run: python cook.py
+
+      # Salva o resultado no seu GitHub
+      - name: Salvar Imagens
+        run: |
+          git config --global user.name 'Bot Cozinheiro'
+          git config --global user.email 'bot@noreply.github.com'
+          git add img_bandeiras
+          git commit -m "Novas bandeiras geradas pelo cook" || echo "Nada novo para salvar"
+          git push
