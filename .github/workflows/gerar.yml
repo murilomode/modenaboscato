@@ -14,21 +14,24 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # --- O TRUQUE MÁGICO COMEÇA AQUI ---
-      # O robô vai baixar as bandeiras sozinho, você não precisa subir nada!
-      - name: Baixar Ingredientes (Bandeiras)
+      # --- O NOVO TRUQUE (KIT COMPLETO) ---
+      - name: Baixar Kit Completo (Bandeiras + Arquivos)
         run: |
-          # Baixa o pacote de bandeiras da internet
-          wget https://github.com/hjnilsson/country-flags/archive/refs/heads/master.zip -O flags.zip
-          # Abre o pacote
-          unzip -q flags.zip
-          # Renomeia a pasta para 'flags' pro cozinheiro achar
-          mv country-flags-master/svg flags
-          # Limpa o lixo
-          rm flags.zip
-          rm -rf country-flags-master
-          echo "Bandeiras baixadas com sucesso!"
-      # --- FIM DO TRUQUE ---
+          # Baixa o código original do bot que tem tudo
+          wget https://github.com/antooro/FlagsMashupBot/archive/refs/heads/master.zip -O kit.zip
+          unzip -q kit.zip
+          
+          # Copia TUDO (bandeiras, colors, countries) para a pasta principal
+          # O -n impede que ele apague seu cook.py se tiver conflito
+          cp -rn FlagsMashupBot-master/* .
+          
+          # Garante que a pasta flags está no lugar certo
+          if [ -d "FlagsMashupBot-master/flags" ]; then cp -r FlagsMashupBot-master/flags .; fi
+          
+          # Limpeza
+          rm kit.zip
+          rm -rf FlagsMashupBot-master
+          echo "Ingredientes baixados com sucesso!"
 
       - name: Instalar Dependências do Linux
         run: |
@@ -43,9 +46,9 @@ jobs:
       - name: Instalar Bibliotecas
         run: |
           pip install pycairo
-          # Instala dependências extras se existirem
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+      # Roda o nosso cozinheiro
       - name: Rodar o Cook
         run: python cook.py
 
