@@ -3,10 +3,10 @@ name: Gerar Bandeiras
 on:
   schedule:
     - cron: '0 0 * * *' # Roda todo dia à meia-noite
-  workflow_dispatch: # Permite rodar clicando no botão manualmente
+  workflow_dispatch: # Permite rodar manualmente
 
 permissions:
-  contents: write # Permite salvar as imagens geradas no repositório
+  contents: write
 
 jobs:
   cozinhar:
@@ -14,7 +14,22 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # Instala o Cairo (ferramenta gráfica do Linux necessária para desenhar)
+      # --- O TRUQUE MÁGICO COMEÇA AQUI ---
+      # O robô vai baixar as bandeiras sozinho, você não precisa subir nada!
+      - name: Baixar Ingredientes (Bandeiras)
+        run: |
+          # Baixa o pacote de bandeiras da internet
+          wget https://github.com/hjnilsson/country-flags/archive/refs/heads/master.zip -O flags.zip
+          # Abre o pacote
+          unzip -q flags.zip
+          # Renomeia a pasta para 'flags' pro cozinheiro achar
+          mv country-flags-master/svg flags
+          # Limpa o lixo
+          rm flags.zip
+          rm -rf country-flags-master
+          echo "Bandeiras baixadas com sucesso!"
+      # --- FIM DO TRUQUE ---
+
       - name: Instalar Dependências do Linux
         run: |
           sudo apt-get update
@@ -25,22 +40,19 @@ jobs:
         with:
           python-version: '3.9'
 
-      # Instala as bibliotecas de Python necessárias
       - name: Instalar Bibliotecas
         run: |
           pip install pycairo
+          # Instala dependências extras se existirem
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          if [ -f requirements ]; then pip install -r requirements; fi
 
-      # AQUI ESTÁ A MUDANÇA: Chamamos o cook.py
       - name: Rodar o Cook
         run: python cook.py
 
-      # Salva o resultado no seu GitHub
       - name: Salvar Imagens
         run: |
           git config --global user.name 'Bot Cozinheiro'
           git config --global user.email 'bot@noreply.github.com'
           git add img_bandeiras
-          git commit -m "Novas bandeiras geradas pelo cook" || echo "Nada novo para salvar"
+          git commit -m "Novas bandeiras geradas" || echo "Nada novo para salvar"
           git push
