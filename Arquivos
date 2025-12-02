@@ -1,0 +1,783 @@
+Alice Blue #F0F8FF
+Antique White #FAEBD7
+Aqua #00FFFF
+Aquamarine #7FFFD4
+Azure #F0FFFF
+Beige #F5F5DC
+Bisque #FFE4C4
+Black #000000
+Blanched Almond #FFEBCD
+Blue #0000FF
+Blue Violet #8A2BE2
+Brown #A52A2A
+Burlywood #DEB887
+Cadet Blue #5F9EA0
+Chartreuse #7FFF00
+Chocolate #D2691E
+Coral #FF7F50
+Cornflower Blue #6495ED
+Cornsilk #FFF8DC
+Crimson #DC143C
+Cyan #00FFFF
+Dark Blue #00008B
+Dark Cyan #008B8B
+Dark Goldenrod #B8860B
+Dark Gray #A9A9A9
+Dark Green #006400
+Dark Khaki #BDB76B
+Dark Magenta #8B008B
+Dark Olive Green #556B2F
+Dark Orange #FF8C00
+Dark Orchid #9932CC
+Dark Red #8B0000
+Dark Salmon #E9967A
+Dark Sea Green #8FBC8F
+Dark Slate Blue #483D8B
+Dark Slate Gray #2F4F4F
+Dark Turquoise #00CED1
+Dark Violet #9400D3
+Deep Pink #FF1493
+Deep Sky Blue #00BFFF
+Dim Gray #696969
+Dodger Blue #1E90FF
+Firebrick #B22222
+Floral White #FFFAF0
+Forest Green #228B22
+Fuchsia #FF00FF
+Gainsboro #DCDCDC
+Ghost White #F8F8FF
+Gold #FFD700
+Goldenrod #DAA520
+Gray #BEBEBE
+Web Gray #808080
+Green #00FF00
+Web Green #008000
+Green Yellow #ADFF2F
+Honeydew #F0FFF0
+Hot Pink #FF69B4
+Indian Red #CD5C5C
+Indigo #4B0082
+Ivory #FFFFF0
+Khaki #F0E68C
+Lavender #E6E6FA
+Lavender Blush #FFF0F5
+Lawn Green #7CFC00
+Lemon Chiffon #FFFACD
+Light Blue #ADD8E6
+Light Coral #F08080
+Light Cyan #E0FFFF
+Light Goldenrod #FAFAD2
+Light Gray #D3D3D3
+Light Green #90EE90
+Light Pink #FFB6C1
+Light Salmon #FFA07A
+Light Sea Green #20B2AA
+Light Sky Blue #87CEFA
+Light Slate Gray #778899
+Light Steel Blue #B0C4DE
+Light Yellow #FFFFE0
+Lime #00FF00
+Lime Green #32CD32
+Linen #FAF0E6
+Magenta #FF00FF
+Maroon #B03060
+Web Maroon #800000
+Medium Aquamarine #66CDAA
+Medium Blue #0000CD
+Medium Orchid #BA55D3
+Medium Purple #9370DB
+Medium Sea Green #3CB371
+Medium Slate Blue #7B68EE
+Medium Spring Green #00FA9A
+Medium Turquoise #48D1CC
+Medium Violet Red #C71585
+Midnight Blue #191970
+Mint Cream #F5FFFA
+Misty Rose #FFE4E1
+Moccasin #FFE4B5
+Navajo White #FFDEAD
+Navy Blue #000080
+Old Lace #FDF5E6
+Olive #808000
+Olive Drab #6B8E23
+Orange #FFA500
+Orange Red #FF4500
+Orchid #DA70D6
+Pale Goldenrod #EEE8AA
+Pale Green #98FB98
+Pale Turquoise #AFEEEE
+Pale Violet Red #DB7093
+Papaya Whip #FFEFD5
+Peach Puff #FFDAB9
+Peru #CD853F
+Pink #FFC0CB
+Plum #DDA0DD
+Powder Blue #B0E0E6
+Purple #A020F0
+Web Purple #800080
+Rebecca Purple #663399
+Red #FF0000
+Rosy Brown #BC8F8F
+Royal Blue #4169E1
+Saddle Brown #8B4513
+Salmon #FA8072
+Sandy Brown #F4A460
+Sea Green #2E8B57
+Seashell #FFF5EE
+Sienna #A0522D
+Silver #C0C0C0
+Sky Blue #87CEEB
+Slate Blue #6A5ACD
+Slate Gray #708090
+Snow #FFFAFA
+Spring Green #00FF7F
+Steel Blue #4682B4
+Tan #D2B48C
+Teal #008080
+Thistle #D8BFD8
+Tomato #FF6347
+Turquoise #40E0D0
+Violet #EE82EE
+Wheat #F5DEB3
+White #FFFFFF
+White Smoke #F5F5F5
+Yellow #FFFF00
+Yellow Green #9ACD32
+import requests
+import random
+from PIL import Image
+from collections import Counter
+from names import NameJoiner
+from bs4 import BeautifulSoup
+import os
+import shutil
+import cairosvg
+import sqlite3
+import itertools
+import math
+
+
+class CountryMixer:
+    def rgb2hex(self, color):
+        r, g, b = color
+        code = "#{:02x}{:02x}{:02x}".format(r, g, b)
+        return code
+
+    def smallerHex(self, bigHex):
+        smaller = "#"
+        for i in [1, 3, 5]:
+            smaller += bigHex[i]
+        return smaller
+
+    def getCountry(self, code):
+        for n in self.flags_info:
+            if n["cca2"] == code:
+                country = n
+        print(country["name"])
+        return country
+
+    def getNeighbours(self):
+        hasCountries = False
+        while not hasCountries:
+            first_country = random.choice(self.flags_info)
+
+            country_flag_code = first_country["cca3"]
+            borders = first_country.get("borders")
+            print(country_flag_code)
+            if borders:
+                frontier = random.choice(borders)
+                for flag_info in self.flags_info:
+                    if flag_info["cca3"] == frontier:
+                        second_country = flag_info
+
+                if first_country and second_country:
+                    hasCountries = True
+
+        self.first_country = first_country
+        self.second_country = second_country
+        self.countries = (self.first_country, self.second_country)
+        for country in self.countries:
+            self.downloadPNGFlag(country["cca3"], country["cca2"])
+
+    def updateDbWithBase(self, template):
+        conn = sqlite3.connect("countries.db")
+        c = conn.cursor()
+        first_country, second_country = sorted([self.first_country["cca2"], self.second_country["cca2"]])
+
+        c.execute(
+            "update countries set base=(?) where first_country=(?) and second_country=(?) and base is null",
+            (template, first_country, second_country),
+        )
+        conn.commit()
+
+    def insertCountries(self):
+        conn = sqlite3.connect("countries.db")
+        c = conn.cursor()
+        first_country, second_country = sorted([self.first_country["cca2"], self.second_country["cca2"]])
+        print(first_country, second_country)
+        c.execute("insert into countries values (?,?,?)", (first_country, second_country, None))
+        conn.commit()
+
+    def isAlreadyDone(self, template, colors):
+        conn = sqlite3.connect("countries.db")
+        c = conn.cursor()
+        first_country, second_country = sorted([template, colors])
+        c.execute(
+            "select * from countries where first_country=? and second_country=? and base=?",
+            (first_country, second_country, template),
+        )
+        rows = c.fetchall()
+
+        return len(rows) != 0
+
+    def checkMashupValid(self):
+        conn = sqlite3.connect("countries.db")
+        c = conn.cursor()
+        first_country, second_country = sorted([self.first_country["cca2"], self.second_country["cca2"]])
+        if first_country == "NU" or second_country == "NU":
+            return False
+        print(first_country, second_country)
+        c.execute("select * from countries where first_country=? and second_country=?", (first_country, second_country))
+        rows = c.fetchall()
+        print(rows)
+        if len(rows) == 1 and rows[0][2]:
+            co = Counter(rows[0])
+            self.template3Code = co.most_common()[-1][0]
+            if self.template3Code == self.first_country["cca2"]:
+                self.template3Code = self.first_country["cca3"]
+            else:
+                self.template3Code = self.second_country["cca3"]
+            print(self.template3Code)
+            return True
+        elif len(rows) < 1:
+            self.template3Code = None
+
+            return True
+        else:
+            self.template3Code = None
+
+            return False
+
+    def getFullFlagsInfoJSON(self):
+        info = requests.get("https://restcountries.com/v3.1/all")
+        if info.status_code != 200:
+            raise RuntimeError("Can't get full flags info")
+
+        return info.json()
+
+    def chooseRandomFlag(self, alreadyChoosen=None):
+
+        while True:
+            flag = random.choice(self.flags_info)
+            if flag["cca3"] != alreadyChoosen:
+                return flag
+
+    def downloadPNGFlag(self, cca3, cca2):
+        r = requests.get(f"https://flagcdn.com/w2560/{cca2.lower()}.png")
+        print(cca3)
+        with open(f"{cca3.lower()}.png", "wb") as f:
+            f.write(r.content)
+
+    def randomlyDownloadFlags(self):
+
+        self.first_country = self.chooseRandomFlag()
+        self.second_country = self.chooseRandomFlag()
+        self.countries = (self.first_country, self.second_country)
+
+        for country in self.countries:
+            self.downloadPNGFlag(country["cca3"], country["cca2"])
+
+    def getFlagsEmojis(self):
+        emojis = []
+
+        for country in self.countries:
+            country_alpha_code = country["cca2"]
+            emoji = chr(ord(country_alpha_code[0]) + 127397) + chr(ord(country_alpha_code[1]) + 127397)
+            emojis.append(emoji)
+
+        return emojis
+
+    def getFlagsSortedColors(self):
+
+        flagsSortedColors = []
+
+        for country in self.countries:
+            img = Image.open(f'{country["cca3"].lower()}.png')
+            width, height = img.size
+            limit = (width * height) * 0.01
+            colors = img.convert("RGBA").getcolors(img.size[0] * img.size[1])  # this converts the mode to RGB
+            colors = sorted(colors, key=lambda x: x[0], reverse=True)
+            colors = [c for c in colors if c[1][3] != 0]
+
+            colorb1 = [self.rgb2hex(color[1][:3]) for color in colors[:5] if color[0] > limit]
+
+            combinations = itertools.combinations(colorb1, 2)
+
+            for pair in combinations:
+                r1, g1, b1 = tuple(int(pair[0].replace("#", "")[i : i + 2], 16) for i in (0, 2, 4))
+                r2, g2, b2 = tuple(int(pair[1].replace("#", "")[i : i + 2], 16) for i in (0, 2, 4))
+                dif = math.sqrt(math.pow(r1 - r2, 2) + math.pow(g1 - g2, 2) + math.pow(b1 - b2, 2))
+                if dif < 50 and pair[1] in colorb1:
+                    print(pair)
+                    colorb1.remove(pair[1])
+            print(colorb1)
+            print("\n")
+            flagsSortedColors.append(colorb1)
+        return flagsSortedColors
+
+    def selectTemplateAndColors(self, nameColorList):
+
+        FIRSTCOUNTRY = NAME = 0
+        LASTCOUNTRY = COLORS = 1
+
+        template = nameColorList[FIRSTCOUNTRY][NAME]
+        colors = nameColorList[LASTCOUNTRY][NAME]
+
+        if len(nameColorList[FIRSTCOUNTRY][COLORS]) > len(nameColorList[LASTCOUNTRY][COLORS]):
+            template, colors = colors, template
+
+        elif len(nameColorList[FIRSTCOUNTRY][COLORS]) == len(nameColorList[LASTCOUNTRY][COLORS]):
+            if random.randint(0, 2) == 0:
+                template, colors = colors, template
+
+            if self.isAlreadyDone(self.countries[template]["cca2"], self.countries[colors]["cca2"]):
+                template, colors = colors, template
+
+            if self.first_country is not self.second_country:
+                self.updateDbWithBase(self.countries[template]["cca2"])
+
+        if not self.template3Code:
+            self.template3Code = self.countries[template]["cca3"]
+        templateSVG = requests.get(f"https://flagcdn.com/{self.countries[template]['cca2'].lower()}.svg")
+
+        for i in nameColorList:
+
+            if i[NAME] == colors:
+                newColors = i[COLORS]
+            else:
+                oldColors = i[COLORS]
+
+        if self.first_country == self.second_country:
+            newColors = reversed(newColors)
+
+        colorsDict = dict(zip(newColors, oldColors))
+
+        return templateSVG.text, colorsDict
+
+    def clean(self, text):
+        colors_file = open("colors", "r")
+        color_codes = colors_file.readlines()
+        color_codes = [code.split(",") for code in color_codes]
+        clean = {}
+        for code in color_codes:
+            code = code[0].split()
+            clean[code[0].lower()] = code[1].replace("\n", "")
+
+        data2 = text
+        for key, value in clean.items():
+            tag = f'fill="{key}"'
+
+            if tag in data2:
+                new_value = f'fill="{value}"'
+                print(tag, new_value)
+                data2 = data2.replace(tag, new_value)
+            tag = f"fill:{key}"
+
+            if tag in data2:
+                new_value = f"fill:{value}"
+                print(tag, new_value)
+                data2 = data2.replace(tag, new_value)
+
+        if data2 is not text:
+            print("They differ")
+            text = data2
+
+        root = BeautifulSoup(text, "lxml")
+        svg = root.find("svg")
+
+        svg_rects = svg.findAll("rect", recursive=False)
+        differs = False
+        for t in svg_rects:
+            fill = t.get("fill")
+
+            if fill is None and t.get("style") is None and t.get("stroke") is None:
+                t["fill"] = "#000000"
+                differs = True
+
+        svc_paths = svg.findAll("path", recursive=False)
+
+        for t in svc_paths:
+            fill = t.get("fill")
+
+            if fill is None and t.get("style") is None and t.get("stroke") is None:
+                t["fill"] = "#000000"
+                differs = True
+
+        if differs:
+            print("They differ")
+            data = str(svg).replace("<html><body>", "\n").replace("</body></html>", "")
+            text = data
+
+        return text
+
+    def changeColors(self, changes):
+        self.svgText = self.clean(self.svgText)
+        for new, old in changes.items():
+            self.svgText = self.svgText.replace(old, new.replace("#", "ç"))
+            self.svgText = self.svgText.replace(old.upper(), new.replace("#", "ç"))
+
+        for new, old in changes.items():
+            self.svgText = self.svgText.replace(self.smallerHex(old), new.replace("#", "ç"))
+            self.svgText = self.svgText.replace(self.smallerHex(old).upper(), new.replace("#", "ç"))
+
+        self.svgText = self.svgText.replace("ç", "#")
+
+    def calculateNames(self):
+        name1 = self.first_country["name"]["official"]
+        name2 = self.second_country["name"]["official"]
+
+        if "(" in name1:
+            p_temp = name1.split("(")
+            name1 = p_temp[1].replace(")", "") + " " + p_temp[0]
+
+        if "(" in name2:
+            p_temp = name2.split("(")
+            name2 = p_temp[1].replace(")", "") + " " + p_temp[0]
+
+        if "," in name1:
+            p_temp = name1.split(", ")
+            name1 = p_temp[1] + " " + p_temp[0]
+
+        if "," in name2:
+            p_temp = name2.split(", ")
+            name2 = p_temp[1] + " " + p_temp[0]
+
+        self.first_country["name"] = name1
+        self.second_country["name"] = name2
+
+        if len(name2.split()) > 1:
+            name = " ".join(name2.split()[:-1]) + " " + name1.split()[-1]
+        elif len(name1.split()) > 1:
+            name = " ".join(name1.split()[:-1]) + " " + name2.split()[-1]
+        else:
+            name = NameJoiner(self.first_country["name"], self.second_country["name"]).join()
+        if name1 == name2:
+            name = name1 + " 2"
+        return name
+
+    def saveToPNG(self):
+        image = Image.open(f"{self.template3Code.lower()}.png")
+        width, height = image.size
+        uploaded = False
+        bigger = max(width, height, 4096)
+        limit_kb = 3072
+
+        while not uploaded:
+            with open("output.svg", "w") as f:
+                f.write(self.svgText)
+            cairosvg.svg2png(bytestring=self.svgText, write_to="output.png", scale=int(4096 / bigger))
+            fileSize = os.stat("output.png").st_size / 1024
+            if fileSize < limit_kb:
+                uploaded = True
+            else:
+                bigger = bigger * 1.25
+
+    def mixFlags(self):
+
+        colorb1, colorb2 = self.getFlagsSortedColors()
+
+        print(colorb1, len(colorb1))
+        print(colorb2, len(colorb2))
+
+        template, colors = self.selectTemplateAndColors([(0, colorb1), (1, colorb2)])
+        print(template)
+        self.svgText = template
+        self.changeColors(colors)
+        self.saveToPNG()
+
+    def removePNGs(self):
+        i = 1
+        for country_data in self.countries:
+            try:
+                filePath = f'{country_data["cca3"].lower()}.png'
+                flagPath = f"flag{i}.png"
+                i = i + 1
+                shutil.move(filePath, flagPath)
+            except:
+                print("Unable to delete", filePath)
+
+    def manuallyDownloadFlags(self, cca3Flag1=None, cca3Flag2=None):
+        if not cca3Flag1:
+            self.first_country = self.chooseRandomFlag()
+        else:
+            self.first_country = self.getCountry(cca3Flag1)
+
+        if not cca3Flag2:
+            self.second_country = self.chooseRandomFlag()
+        else:
+            self.second_country = self.getCountry(cca3Flag2)
+
+        self.countries = (self.first_country, self.second_country)
+
+        self.downloadPNGFlag(self.first_country["cca3"], self.first_country["cca2"])
+        self.downloadPNGFlag(self.second_country["cca3"], self.second_country["cca2"])
+
+    def main(self):
+        self.flags_info = self.getFullFlagsInfoJSON()
+        correct_country = False
+        while not correct_country:
+            randomNum = random.randrange(4)
+            if randomNum == 0:
+                self.getNeighbours()
+            else:
+                self.randomlyDownloadFlags()
+            # self.manuallyDownloadFlags()
+
+            correct_country = self.checkMashupValid()
+
+        self.insertCountries()
+        self.mixFlags()
+        print("Base is " + self.template3Code)
+        print(self.first_country["cca3"], self.second_country["cca3"])
+        name = self.calculateNames()
+        print(name)
+
+        self.removePNGs()
+        return [self.first_country["name"], self.second_country["name"]], self.getFlagsEmojis(), name
+
+
+c = CountryMixer()
+c.main()
+
+MIT License
+
+Copyright (c) 2021 Antonio Orodea
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+import re
+import random
+
+TOOBIG = -1
+TOOSMALL = -2
+NOTNEW = -3
+EMPTY = -1
+
+
+class NameJoiner:
+    def __init__(self, str1, str2):
+        words = [str1, str2]
+        random.shuffle(words)
+        self.fullStartName = words[0]
+        self.fullEndName = words[1]
+        self.initVariables()
+
+    def initVariables(self):
+        self.lower_limit = min(len(self.fullStartName), len(self.fullEndName))
+        self.upper_limit = max(len(self.fullStartName), len(self.fullEndName)) + self.lower_limit - 1
+        self.firstPositions = self.getKeyVocalsPositions(self.fullStartName)
+        self.secondPositions = self.getKeyVocalsPositions(self.fullEndName)
+
+    def join(self):
+
+        res = self.tryToJoin()
+        if res == -1:
+            self.fullStartName, self.fullEndName = self.fullEndName, self.fullStartName
+            self.initVariables()
+            res = self.tryToJoin()
+
+        if res == -1:
+            self.initVariables()
+            return self.fullStartName+self.fullEndName[self.secondPositions[-1]+1:]
+
+        return res
+
+    def tryToJoin(self):
+
+        firstSplitPlace = self.chooseRandomFirstSplit()
+        secondSplitPlace = NOTNEW
+        while secondSplitPlace < 0:
+            secondSplitPlace = self.chooseRandomSecondSplit(firstSplitPlace)
+
+            if secondSplitPlace < 0:
+                self.handleErrorWithFirstPlace(
+                    secondSplitPlace, firstSplitPlace)
+                firstSplitPlace = self.chooseRandomFirstSplit()
+                if firstSplitPlace == EMPTY:
+                    return EMPTY
+
+            else:
+                namex = self.fullStartName[:firstSplitPlace] + \
+                    self.fullEndName[secondSplitPlace:]
+                if namex in [self.fullStartName, self.fullEndName]:
+                    self.secondPositions = [
+                        i for i in self.secondPositions if i != secondSplitPlace-1]
+                    if len(self.secondPositions) == 0:
+                        self.secondPositions = self.getKeyVocalsPositions(
+                            self.fullEndName)
+                        self.firstPositions = self.erasePlaceEq(
+                            firstSplitPlace)
+                        firstSplitPlace = self.chooseRandomFirstSplit()
+                        if firstSplitPlace == EMPTY:
+                            return EMPTY
+
+                    secondSplitPlace = NOTNEW
+
+        return self.fullStartName[:firstSplitPlace] + self.fullEndName[secondSplitPlace:]
+
+    def handleErrorWithFirstPlace(self, error, firstSplitPlace):
+        if error == TOOBIG:  # Need smaller first part
+            self.firstPositions = self.erasePlacesGreaterEq(firstSplitPlace)
+
+        elif error == TOOSMALL:  # Need greater first part
+            self.firstPositions = self.erasePlacesLowerEq(firstSplitPlace)
+
+    def erasePlaceEq(self, position):
+        p = position - 1
+        res = [i for i in self.firstPositions if i != p]
+
+        return res
+
+    def erasePlacesLowerEq(self, position):
+        p = position - 1
+        res = [i for i in self.firstPositions if i > p]
+
+        return res
+
+    def erasePlacesGreaterEq(self, position):
+        p = position - 1
+        res = [i for i in self.firstPositions if i < p]
+
+        return res
+
+    def chooseRandomFirstSplit(self):
+
+        if len(self.firstPositions) == 0:
+            print(
+                f"{self.fullStartName} has been omitted while trying to join with {self.fullEndName}")
+            return -1
+        pos = random.choice(self.firstPositions) + 1
+
+        return pos
+
+    def getKeyVocalsPositions(self, s):
+        regex_iter = re.finditer(r'[aeiouy][^aeiou]', s.lower())
+        positions = [i.start() for i in regex_iter]
+        return positions
+
+    def chooseRandomSecondSplit(self, firstSplitPlace):
+
+        minimumCharactersLeft = self.lower_limit - firstSplitPlace
+        maximumCharactersLeft = self.upper_limit - firstSplitPlace
+
+        minimumIndex = len(self.fullEndName) - maximumCharactersLeft
+        maximumIndex = len(self.fullEndName) - minimumCharactersLeft
+
+        filtered_big_positions = [
+            i for i in self.secondPositions if i <= maximumIndex]
+        if len(filtered_big_positions) == 0:
+            return -2
+        filtered_positions = [
+            i for i in self.secondPositions if minimumIndex <= i + 1 <= maximumIndex]
+        if len(filtered_positions) == 0:
+            return -1
+
+        return random.choice(filtered_positions) + 1
+
+# FlagsMashupBot
+
+Live demo:
+http://flagsmashupbot.pythonanywhere.com/
+
+
+
+![alt text](https://i.imgur.com/LSepqer.png)
+
+https://twitter.com/FlagsMashupBot
+-------------------------------------------------------
+
+## Prerequisites
+ - Python3
+ - Pycairo's [required files in your machine](https://pycairo.readthedocs.io/en/latest/getting_started.html)
+
+### Clone the repo
+```bash
+git clone https://github.com/antooro/FlagsMashupBot
+````
+
+### Start a virtual environment
+**LINUX/OSX**: Inside the repo folder
+```bash
+python -m ./ # starts the venv in the current folder
+source bin/activate # On LINUX or OSX
+.\Scripts\activate # ONLY Windows
+```
+
+To exit the Virtual Environment on any OS
+```bash
+deactivate
+```
+
+### Install the requirements:
+```bash
+pip install -r requirements.txt
+```
+
+Try the image generator 
+
+```bash
+python formatsvg.py
+```
+
+It will generate 3 files: the 2 country flags, and the mashup flag
+
+b64==0.4
+beautifulsoup4==4.9.3
+bs4==0.0.1
+cached-properties==0.7.4
+cairocffi==1.2.0
+CairoSVG==2.5.2
+certifi==2020.12.5
+cffi==1.14.5
+chardet==4.0.0
+cssselect2==0.4.1
+defusedxml==0.7.1
+idna==2.10
+lxml==4.9.1
+Pillow==9.0.0
+pycparser==2.20
+requests==2.25.1
+soupsieve==2.2.1
+tinycss2==1.1.0
+urllib3==1.26.5
+webencodings==0.5.1
+
+# IDE Folders
+.vscode
+.idea
+
+## VENV folders and files
+bin
+include
+lib
+__pycache__
+pyvenv.cfg
+
+# Generated PNGs
+*.png
