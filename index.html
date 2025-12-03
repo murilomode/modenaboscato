@@ -5,345 +5,122 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Datas Comemorapivas™</title>
     <link rel="icon" type="image/png" href="https://fav.farm/🥃">
-
-    <!-- React e Bibliotecas (Carregamento Rápido) -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Fonte Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .animate-spin { animation: spin 1s linear infinite; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .glass-panel { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: white; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .glow-text { text-shadow: 0 0 20px rgba(249, 115, 22, 0.5); }
     </style>
 </head>
-<body class="bg-[#121212] text-white antialiased selection:bg-orange-500 selection:text-black">
-    <div id="root"></div>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]">
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
-        const { createRoot } = ReactDOM;
+    <main class="w-full max-w-lg text-center space-y-6 animate-fade-in">
+        
+        <!-- Cabeçalho da Data -->
+        <div class="space-y-2 mb-8">
+            <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-orange-500/10 text-orange-500 border border-orange-500/20 mb-2">
+                <i data-lucide="calendar" class="w-3 h-3"></i>
+                <span class="text-xs font-bold tracking-[0.2em] uppercase">Hoje é dia de</span>
+            </div>
+            <h1 id="titulo-feriado" class="text-4xl md:text-6xl font-black text-white leading-tight glow-text">
+                CARREGANDO...
+            </h1>
+            <p id="data-hoje" class="text-gray-500 font-mono text-sm">...</p>
+        </div>
 
-        // --- BANCO DE DADOS DE DATAS (Expandido) ---
-        // Se o dia não estiver aqui, o código gera um genérico.
-        const BIG_HOLIDAY_DB = {
-            // JANEIRO
-            '01-01': 'Ano Novo / Confraternização Universal', '01-02': 'Dia do Sanitarista', '01-04': 'Dia Mundial do Braille', 
-            '01-06': 'Dia de Reis', '01-07': 'Dia do Leitor', '01-08': 'Dia do Fotógrafo', '01-09': 'Dia do Astronauta', 
-            '01-14': 'Dia do Treinador de Futebol', '01-15': 'Dia do Compositor', '01-20': 'Dia do Farmacêutico', 
-            '01-21': 'Dia Mundial da Religião', '01-24': 'Dia dos Aposentados', '01-25': 'Dia dos Carteiros', '01-30': 'Dia da Saudade',
+        <!-- O Piva do Dia -->
+        <div class="relative group mx-auto w-full max-w-[500px]">
+            <div class="absolute -inset-1 bg-gradient-to-b from-orange-600 to-purple-900 rounded-2xl blur opacity-50 group-hover:opacity-75 transition duration-1000"></div>
             
-            // FEVEREIRO
-            '02-01': 'Dia do Publicitário', '02-02': 'Dia de Iemanjá', '02-04': 'Dia Mundial do Câncer', 
-            '02-14': 'Dia da Amizade (Valentine\'s Day)', '02-16': 'Dia do Repórter', '02-19': 'Dia do Esportista', 
-            '02-27': 'Dia do Agente Fiscal', 
-            
-            // MARÇO
-            '03-08': 'Dia Internacional da Mulher', '03-09': 'Dia do DJ', '03-14': 'Dia do Pi (π)', 
-            '03-15': 'Dia do Consumidor', '03-19': 'Dia do Artesão', '03-20': 'Início do Outono', 
-            '03-21': 'Dia Internacional das Florestas', '03-22': 'Dia Mundial da Água', '03-27': 'Dia do Circo',
-            
-            // ABRIL
-            '04-01': 'Dia da Mentira', '04-02': 'Dia Mundial de Conscientização do Autismo', '04-07': 'Dia do Jornalista', 
-            '04-13': 'Dia do Beijo', '04-14': 'Dia Mundial do Café', '04-19': 'Dia dos Povos Indígenas', 
-            '04-21': 'Tiradentes', '04-22': 'Descobrimento do Brasil', '04-23': 'Dia de São Jorge', '04-28': 'Dia da Sogra',
-            
-            // MAIO
-            '05-01': 'Dia do Trabalhador', '05-04': 'Dia de Star Wars', '05-05': 'Dia Mundial da Língua Portuguesa', 
-            '05-08': 'Dia do Artista Plástico', '05-13': 'Abolição da Escravatura', '05-15': 'Dia Internacional da Família', 
-            '05-25': 'Dia do Orgulho Nerd', '05-28': 'Dia do Hambúrguer', '05-31': 'Dia do Comissário de Bordo',
-            
-            // JUNHO
-            '06-03': 'Dia Mundial da Bicicleta', '06-05': 'Dia Mundial do Meio Ambiente', '06-12': 'Dia dos Namorados', 
-            '06-18': 'Dia do Químico', '06-24': 'Dia de São João', '06-28': 'Dia do Orgulho LGBTQIA+',
-            
-            // JULHO
-            '07-07': 'Dia Mundial do Chocolate', '07-10': 'Dia da Pizza', '07-13': 'Dia Mundial do Rock', 
-            '07-15': 'Dia do Homem', '07-20': 'Dia do Amigo', '07-26': 'Dia dos Avós',
-            
-            // AGOSTO
-            '08-05': 'Dia Nacional da Saúde', '08-11': 'Dia do Estudante / Dia do Advogado', '08-12': 'Dia Internacional da Juventude', 
-            '08-15': 'Dia da Informática', '08-19': 'Dia Mundial da Fotografia', '08-22': 'Dia do Folclore', 
-            '08-25': 'Dia do Soldado', '08-29': 'Dia do Gamer',
-            
-            // SETEMBRO
-            '09-05': 'Dia da Amazônia', '09-07': 'Independência do Brasil', '09-09': 'Dia do Administrador', 
-            '09-13': 'Dia da Cachaça', '09-15': 'Dia do Cliente', '09-21': 'Dia da Árvore', 
-            '09-22': 'Início da Primavera', '09-30': 'Dia da Secretária',
-            
-            // OUTUBRO
-            '10-01': 'Dia Internacional do Idoso', '10-04': 'Dia dos Animais', '10-12': 'Dia das Crianças / N. Sra. Aparecida', 
-            '10-15': 'Dia do Professor', '10-16': 'Dia Mundial da Alimentação', '10-17': 'Dia da MPB', 
-            '10-18': 'Dia do Médico', '10-25': 'Dia do Macarrão', '10-31': 'Halloween / Dia do Saci',
-            
-            // NOVEMBRO
-            '11-02': 'Dia de Finados', '11-15': 'Proclamação da República', '11-17': 'Dia da Criatividade', 
-            '11-19': 'Dia da Bandeira', '11-20': 'Dia da Consciência Negra', '11-27': 'Dia Nacional de Combate ao Câncer',
-            
-            // DEZEMBRO
-            '12-01': 'Dia Mundial de Luta Contra a AIDS', '12-02': 'Dia do Samba', '12-08': 'Dia da Família', 
-            '12-25': 'Natal', '12-31': 'Véspera de Ano Novo'
-        };
-
-        const IconSettings = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.09a2 2 0 0 1-1-1.74v-.47a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.39a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>;
-        const IconRefresh = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg>;
-        const IconDownload = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>;
-        const IconCalendar = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>;
-
-        const App = () => {
-            const [apiKey, setApiKey] = useState('');
-            const [showSettings, setShowSettings] = useState(false);
-            const [loading, setLoading] = useState(false);
-            const [imageSrc, setImageSrc] = useState(null);
-            const [status, setStatus] = useState('');
-            const [generatedText, setGeneratedText] = useState('');
-            
-            const [currentDate, setCurrentDate] = useState('');
-            const [holiday, setHoliday] = useState('');
-            const [isGeneric, setIsGeneric] = useState(false);
-
-            useEffect(() => {
-                const savedKey = localStorage.getItem('openai_api_key');
-                if (savedKey) setApiKey(savedKey);
-                identifyHoliday();
-            }, []);
-
-            const saveKey = () => {
-                localStorage.setItem('openai_api_key', apiKey);
-                setShowSettings(false);
-                alert("Chave salva! Agora o Piva tá on.");
-            };
-
-            const identifyHoliday = () => {
-                const now = new Date();
-                const day = String(now.getDate()).padStart(2, '0');
-                const month = String(now.getMonth() + 1).padStart(2, '0');
-                const dateKey = `${month}-${day}`;
-
-                // Formatação bonita da data
-                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                setCurrentDate(now.toLocaleDateString('pt-BR', options));
-
-                // Busca no banco de dados gigante
-                if (BIG_HOLIDAY_DB[dateKey]) {
-                    setHoliday(BIG_HOLIDAY_DB[dateKey]);
-                    setIsGeneric(false);
-                } else {
-                    // Fallback inteligente
-                    const weekDay = now.toLocaleDateString('pt-BR', { weekday: 'long' });
-                    setHoliday(`Dia de ${weekDay.charAt(0).toUpperCase() + weekDay.slice(1)} Comum`);
-                    setIsGeneric(true);
-                }
-            };
-
-            const handleGenerate = async () => {
-                if (!apiKey) {
-                    setShowSettings(true);
-                    return;
-                }
-
-                setLoading(true);
-                setStatus('Consultando os astros do mandrakismo...');
-                setImageSrc(null);
-                setGeneratedText('');
-
-                try {
-                    // 1. Geração de Frase (GPT-4o-mini)
-                    // Instruções mais agressivas para manter o personagem
-                    const textPrompt = `
-                        Contexto: Você é um bot que gera legendas para memes do "Piva Copão" (rapaz sério, braços cruzados).
-                        Personagem: Mandrake, gíria de quebrada, exagerado, engraçado.
-                        Feriado de Hoje: "${holiday}".
-                        
-                        Tarefa: Crie UMA frase curta no formato clássico:
-                        "joga o [algo relacionado ao feriado] sem deixar cair [algo relacionado ao feriado]".
-                        
-                        Exemplos:
-                        - "joga o pernilzão sem deixar cair a uva passa" (Natal)
-                        - "joga o glitterzão sem deixar cair o latão" (Carnaval)
-                        - "joga a CLT assinada sem deixar cair o vale transporte" (Dia do Trabalho)
-                        
-                        Se for um dia comum, invente algo relacionado a sobreviver à semana.
-                        Responda SOMENTE a frase.
-                    `;
-
-                    const textRes = await fetch('https://api.openai.com/v1/chat/completions', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
-                        body: JSON.stringify({ model: "gpt-4o-mini", messages: [{ role: "user", content: textPrompt }], max_tokens: 60 })
-                    });
-                    
-                    const textData = await textRes.json();
-                    if (textData.error) throw new Error(textData.error.message);
-                    const phrase = textData.choices[0].message.content.replace(/"/g, '').trim();
-                    setGeneratedText(phrase);
-
-                    // 2. Geração de Imagem (DALL-E 3)
-                    setStatus('Renderizando o Piva a caráter...');
-                    
-                    const imagePrompt = `
-                        A photo of a young brazilian man, short brown hair, serious face expression, arms crossed, standing confidently looking at camera.
-                        He is cosplaying or dressed in a costume specifically for the holiday: "${holiday}".
-                        The background is festive and related to "${holiday}".
-                        Next to him, a large speech bubble or text overlay in a meme font clearly displaying the text: "${phrase}".
-                        High quality, realistic style, viral internet meme aesthetic. 
-                        Note: The text must be legible.
-                    `;
-
-                    const imgRes = await fetch('https://api.openai.com/v1/images/generations', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
-                        body: JSON.stringify({ model: "dall-e-3", prompt: imagePrompt, n: 1, size: "1024x1024", quality: "standard" })
-                    });
-
-                    const imgData = await imgRes.json();
-                    if (imgData.error) throw new Error(imgData.error.message);
-                    
-                    setImageSrc(imgData.data[0].url);
-
-                } catch (err) {
-                    alert("Deu ruim: " + err.message);
-                } finally {
-                    setLoading(false);
-                }
-            };
-
-            const downloadImage = async () => {
-                if (!imageSrc) return;
-                try {
-                    const response = await fetch(imageSrc);
-                    const blob = await response.blob();
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `comemorapiva-${holiday.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.png`;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                } catch (e) {
-                    window.open(imageSrc, '_blank');
-                }
-            };
-
-            return (
-                <div className="min-h-screen flex flex-col items-center pb-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-fixed">
-                    {/* Navbar */}
-                    <nav className="w-full border-b border-white/10 bg-black/50 backdrop-blur-md sticky top-0 z-50">
-                        <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                                <div className="bg-orange-600 text-white w-8 h-8 rounded flex items-center justify-center font-bold text-lg">TM</div>
-                                <h1 className="font-bold tracking-tight text-lg">Datas Comemorapivas™</h1>
-                            </div>
-                            <button 
-                                onClick={() => setShowSettings(true)}
-                                className={`p-2 rounded-full transition ${!apiKey ? 'text-red-500 animate-pulse' : 'text-gray-400 hover:text-white'}`}
-                            >
-                                <IconSettings />
-                            </button>
-                        </div>
-                    </nav>
-
-                    {/* Conteúdo Principal */}
-                    <main className="w-full max-w-2xl px-6 mt-12 flex flex-col items-center text-center">
-                        
-                        {/* Data Card */}
-                        <div className="glass-panel p-8 rounded-3xl w-full mb-8 shadow-2xl relative overflow-hidden group hover:border-orange-500/50 transition duration-500">
-                            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition">
-                                <IconCalendar />
-                            </div>
-                            
-                            <p className="text-orange-500 font-bold uppercase tracking-widest text-xs mb-2">Hoje é dia de:</p>
-                            <h2 className="text-3xl md:text-5xl font-black mb-2 leading-tight">
-                                {holiday}
-                            </h2>
-                            <p className="text-gray-400">{currentDate}</p>
-
-                            {isGeneric && (
-                                <div className="mt-4 text-xs bg-white/5 inline-block px-3 py-1 rounded text-gray-500">
-                                    Nenhuma data especial encontrada no banco de dados hoje.
-                                </div>
-                            )}
-                        </div>
-
-                        {/* Botão de Ação */}
-                        {!imageSrc && !loading && (
-                            <button 
-                                onClick={handleGenerate}
-                                className="w-full py-6 rounded-2xl bg-white text-black font-black text-xl hover:scale-[1.02] active:scale-95 transition-all shadow-[0_0_50px_-10px_rgba(255,255,255,0.2)] flex items-center justify-center gap-3"
-                            >
-                                <IconRefresh />
-                                GERAR PIVA DE HOJE
-                            </button>
-                        )}
-
-                        {/* Loading */}
-                        {loading && (
-                            <div className="glass-panel p-10 rounded-2xl flex flex-col items-center animate-pulse w-full">
-                                <div className="w-16 h-16 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-                                <p className="text-orange-400 font-medium">{status}</p>
-                            </div>
-                        )}
-
-                        {/* Resultado */}
-                        {imageSrc && (
-                            <div className="w-full animate-fade-in-up">
-                                <div className="relative bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10 group">
-                                    <img src={imageSrc} alt="Meme Gerado" className="w-full h-auto" />
-                                    
-                                    <div className="absolute bottom-0 inset-x-0 p-6 bg-gradient-to-t from-black to-transparent flex gap-3 pt-24 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <button onClick={handleGenerate} className="flex-1 bg-white/10 hover:bg-white/20 backdrop-blur py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2">
-                                            <IconRefresh /> Novo
-                                        </button>
-                                        <button onClick={downloadImage} className="flex-1 bg-orange-600 hover:bg-orange-700 text-white py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-lg">
-                                            <IconDownload /> Baixar
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="mt-6 p-6 glass-panel rounded-2xl text-left border-l-4 border-orange-500">
-                                    <p className="text-gray-400 text-xs uppercase tracking-wider mb-1">Frase Gerada:</p>
-                                    <p className="text-xl italic font-serif text-white">"{generatedText}"</p>
-                                </div>
-                            </div>
-                        )}
-
-                    </main>
-
-                    {/* Modal Configuração */}
-                    {showSettings && (
-                        <div className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4 backdrop-blur-sm">
-                            <div className="bg-[#1a1a1a] border border-white/10 p-6 rounded-2xl w-full max-w-md shadow-2xl">
-                                <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                                    <span className="text-orange-500"><IconSettings /></span> Configuração
-                                </h3>
-                                
-                                <label className="text-sm text-gray-400 mb-2 block">API Key da OpenAI</label>
-                                <input 
-                                    type="password" 
-                                    value={apiKey}
-                                    onChange={(e) => setApiKey(e.target.value)}
-                                    placeholder="sk-..."
-                                    className="w-full bg-black/50 border border-white/20 rounded-lg p-3 text-white focus:border-orange-500 outline-none transition"
-                                />
-                                <p className="text-xs text-gray-600 mt-2">Sua chave fica salva apenas no seu navegador.</p>
-
-                                <div className="mt-6 flex gap-3">
-                                    <button onClick={saveKey} className="flex-1 bg-orange-600 hover:bg-orange-700 py-3 rounded-lg font-bold text-white transition">Salvar</button>
-                                    <button onClick={() => setShowSettings(false)} className="px-6 py-3 bg-white/5 hover:bg-white/10 rounded-lg font-bold transition">Fechar</button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
+            <div class="relative bg-[#0a0a0a] rounded-xl overflow-hidden shadow-2xl border border-white/10 aspect-square">
+                <!-- A imagem vem do mesmo diretório -->
+                <img id="piva-img" src="./piva_do_dia.png" 
+                     class="w-full h-full object-cover transform hover:scale-105 transition duration-700" 
+                     alt="Piva do Dia" 
+                     onerror="this.src='https://placehold.co/1024x1024/1a1a1a/FFF?text=Aguardando+o+Robô...';">
+                
+                <!-- Overlay com a Frase -->
+                <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 via-black/50 to-transparent pt-20">
+                    <p id="frase-meme" class="text-xl md:text-2xl italic font-serif text-white drop-shadow-md">
+                        "..."
+                    </p>
                 </div>
-            );
-        };
+            </div>
+        </div>
 
-        const root = createRoot(document.getElementById('root'));
-        root.render(<App />);
+        <!-- Contador Regressivo -->
+        <div class="glass mt-8 p-6 rounded-2xl border-t border-white/10">
+            <p class="text-[10px] text-gray-500 uppercase tracking-widest mb-2 flex items-center justify-center gap-2">
+                <i data-lucide="timer" class="w-3 h-3"></i> Próximo Piva em
+            </p>
+            <div id="countdown" class="text-3xl font-mono font-bold text-white tracking-widest">
+                --:--:--
+            </div>
+        </div>
+
+        <footer class="text-gray-600 text-xs mt-8">
+            <p>Datas Comemorapivas™ • Atualizado diariamente às 07:00</p>
+        </footer>
+
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        // 1. Carregar os dados (JSON gerado pelo Python)
+        async function carregarDados() {
+            try {
+                // Adiciona timestamp para o navegador não usar cache velho
+                const time = new Date().getTime();
+                const response = await fetch(`./dados_do_dia.json?t=${time}`);
+                if (!response.ok) throw new Error("JSON não encontrado");
+                
+                const data = await response.json();
+
+                document.getElementById('titulo-feriado').innerText = data.feriado.toUpperCase();
+                document.getElementById('data-hoje').innerText = data.data;
+                document.getElementById('frase-meme').innerText = `"${data.frase}"`;
+                
+                // Força recarregamento da imagem
+                document.getElementById('piva-img').src = `./piva_do_dia.png?t=${time}`;
+
+            } catch (e) {
+                console.log("Aguardando primeira execução do robô...");
+                document.getElementById('titulo-feriado').innerText = "CALMA LÁ...";
+                document.getElementById('frase-meme').innerText = "O robô está acordando. Volte em alguns minutos.";
+            }
+        }
+
+        // 2. Lógica do Contador (Reset às 07:00 BRT / 10:00 UTC)
+        function updateTimer() {
+            const now = new Date();
+            const target = new Date();
+            
+            // Define o alvo para as 07:00 da manhã
+            // Nota: Se o servidor do usuário estiver em fuso diferente, pode variar. 
+            // O ideal seria usar UTC, mas para simplificar vamos usar hora local do navegador.
+            target.setHours(7, 0, 0, 0);
+
+            // Se já passou das 7h hoje, aponta para amanhã
+            if (now > target) {
+                target.setDate(target.getDate() + 1);
+            }
+
+            const diff = target - now;
+            
+            const h = Math.floor((diff / (1000 * 60 * 60)));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').innerText = 
+                `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        carregarDados();
+        setInterval(updateTimer, 1000);
+        updateTimer();
     </script>
 </body>
 </html>
