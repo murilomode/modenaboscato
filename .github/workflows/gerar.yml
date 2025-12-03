@@ -3,10 +3,10 @@ name: Gerar Bandeiras
 on:
   schedule:
     - cron: '0 0 * * *' # Roda todo dia à meia-noite
-  workflow_dispatch: # Permite rodar manualmente
+  workflow_dispatch: # Botão para rodar manualmente
 
 permissions:
-  contents: write
+  contents: write # Permissão para salvar as imagens
 
 jobs:
   cozinhar:
@@ -14,27 +14,34 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Baixar Ingredientes Frescos (Forçar Substituição)
+      # --- PASSO DA LIMPEZA E CORREÇÃO TOTAL ---
+      - name: Baixar e Consertar Arquivos (Modo Forçado)
         run: |
-          # 1. Baixa o código original
-          wget https://github.com/antooro/FlagsMashupBot/archive/refs/heads/master.zip -O kit.zip
-          unzip -q kit.zip
+          echo "Iniciando reparo dos arquivos..."
           
-          # 2. MODO TRATOR: Copia tudo por cima do que já existe (-f = force)
-          # Isso garante que formatsvg.py e countries estejam perfeitos
+          # 1. Baixa o repositório original completo
+          wget https://github.com/antooro/FlagsMashupBot/archive/refs/heads/master.zip -O kit_completo.zip
+          unzip -q kit_completo.zip
+          
+          # 2. MODO TRATOR: Copia os arquivos oficiais por cima dos seus
+          # O comando 'yes | cp -rf' força a substituição sem perguntar nada
           cp -rf FlagsMashupBot-master/* .
           
-          # 3. Garante a pasta de bandeiras
-          if [ -d "FlagsMashupBot-master/flags" ]; then cp -rf FlagsMashupBot-master/flags .; fi
+          # 3. Garante que a pasta de bandeiras vá para o lugar certo
+          if [ -d "FlagsMashupBot-master/flags" ]; then 
+            cp -rf FlagsMashupBot-master/flags .
+          fi
           
-          # 4. Limpeza
-          rm kit.zip
+          # 4. Limpa a sujeira do download
+          rm kit_completo.zip
           rm -rf FlagsMashupBot-master
           
-          # 5. Lista os arquivos só para termos certeza no log (opcional, para debug)
+          # 5. Mostra o que temos (para conferência no log)
           ls -F
+          echo "Arquivos reparados com sucesso!"
 
-      - name: Instalar Dependências do Linux
+      # --- INSTALAÇÃO DE FERRAMENTAS ---
+      - name: Instalar Dependências do Linux (Cairo)
         run: |
           sudo apt-get update
           sudo apt-get install -y libcairo2-dev pkg-config python3-dev
@@ -44,18 +51,25 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Instalar Bibliotecas
+      - name: Instalar Bibliotecas Python
         run: |
           pip install pycairo
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          # Instala requirements se existir, senão instala o básico
+          if [ -f requirements.txt ]; then 
+            pip install -r requirements.txt
+          else
+            pip install tweepy
+          fi
 
-      - name: Rodar o Cook
+      # --- A HORA DO SHOW ---
+      - name: Rodar o Cozinheiro
         run: python cook.py
 
-      - name: Salvar Imagens
+      # --- SALVAR RESULTADO ---
+      - name: Salvar Imagens Geradas
         run: |
           git config --global user.name 'Bot Cozinheiro'
           git config --global user.email 'bot@noreply.github.com'
           git add img_bandeiras
-          git commit -m "Novas bandeiras geradas" || echo "Nada novo para salvar"
+          git commit -m "Novas bandeiras geradas (Reparo Automático)" || echo "Nada novo para salvar"
           git push
