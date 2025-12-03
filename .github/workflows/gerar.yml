@@ -2,11 +2,11 @@ name: Gerar Bandeiras
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Roda todo dia à meia-noite
-  workflow_dispatch: # Botão para rodar manualmente
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
 permissions:
-  contents: write # Permissão para salvar as imagens
+  contents: write
 
 jobs:
   cozinhar:
@@ -14,34 +14,27 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # --- PASSO DA LIMPEZA E CORREÇÃO TOTAL ---
-      - name: Baixar e Consertar Arquivos (Modo Forçado)
+      # --- ESTRATÉGIA NOVA: CLONAR DIRETO ---
+      - name: Baixar o Cérebro do Robô (Git Clone)
         run: |
-          echo "Iniciando reparo dos arquivos..."
+          # Limpa tudo antes para garantir
+          rm -rf FlagsMashupBot flags *.py countries colors requirements*
           
-          # 1. Baixa o repositório original completo
-          wget https://github.com/antooro/FlagsMashupBot/archive/refs/heads/master.zip -O kit_completo.zip
-          unzip -q kit_completo.zip
+          # Clona o repositório original numa pasta temporária
+          git clone https://github.com/antooro/FlagsMashupBot.git temp_bot
           
-          # 2. MODO TRATOR: Copia os arquivos oficiais por cima dos seus
-          # O comando 'yes | cp -rf' força a substituição sem perguntar nada
-          cp -rf FlagsMashupBot-master/* .
+          # Move o conteúdo para a raiz (onde o cook.py consegue ver)
+          cp -r temp_bot/* .
           
-          # 3. Garante que a pasta de bandeiras vá para o lugar certo
-          if [ -d "FlagsMashupBot-master/flags" ]; then 
-            cp -rf FlagsMashupBot-master/flags .
-          fi
+          # Apaga a pasta temporária
+          rm -rf temp_bot
           
-          # 4. Limpa a sujeira do download
-          rm kit_completo.zip
-          rm -rf FlagsMashupBot-master
-          
-          # 5. Mostra o que temos (para conferência no log)
-          ls -F
-          echo "Arquivos reparados com sucesso!"
+          # --- TESTE DE SEGURANÇA ---
+          # Vai mostrar no log se os arquivos estão lá mesmo
+          echo "Verificando arquivos essenciais:"
+          ls -l countries flags/BR.svg names.py formatsvg.py || echo "ALERTA: Algo falta!"
 
-      # --- INSTALAÇÃO DE FERRAMENTAS ---
-      - name: Instalar Dependências do Linux (Cairo)
+      - name: Instalar Dependências do Linux
         run: |
           sudo apt-get update
           sudo apt-get install -y libcairo2-dev pkg-config python3-dev
@@ -51,25 +44,96 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Instalar Bibliotecas Python
+      - name: Instalar Bibliotecas
         run: |
           pip install pycairo
-          # Instala requirements se existir, senão instala o básico
-          if [ -f requirements.txt ]; then 
-            pip install -r requirements.txt
-          else
-            pip install tweepy
-          fi
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      # --- A HORA DO SHOW ---
-      - name: Rodar o Cozinheiro
+      # Recriamos o cook.py aqui para garantir que ele é compatível
+      # (Colei o código do seu cook.py aqui dentro do YAML para facilitar)
+      - name: Criar o Cozinheiro (Cook)
+        run: |
+          cat <<EOF > cook.py
+          import os
+          import random
+          import json
+          import shutil
+          try:
+              import names
+              import formatsvg
+          except ImportError as e:
+              print(f"ERRO CRITICO: Faltam arquivos do bot! {e}")
+              exit(1)
+
+          QUANTIDADE = 50 
+          PASTA_SITE = "img_bandeiras"
+
+          if os.path.exists(PASTA_SITE): shutil.rmtree(PASTA_SITE)
+          os.makedirs(PASTA_SITE)
+
+          # Verifica se o arquivo countries existe
+          if not os.path.exists('countries'):
+              print("ERRO: Arquivo 'countries' não encontrado!")
+              exit(1)
+
+          with open('countries', 'r') as f:
+              # Filtra linhas vazias
+              linhas = [l.strip() for l in f.read().splitlines() if l.strip()]
+
+          cardapio = []
+          print(f"Gerando {QUANTIDADE} bandeiras...")
+
+          for i in range(QUANTIDADE):
+              try:
+                  linha_a = random.choice(linhas)
+                  linha_b = random.choice(linhas)
+                  
+                  # Lógica para separar ID e Nome
+                  def separar(linha):
+                      if ';' in linha: return linha.split(';')
+                      return linha.split(' ', 1)
+
+                  pais_a = separar(linha_a)
+                  pais_b = separar(linha_b)
+                  
+                  # Garante que não são iguais
+                  while pais_a[0] == pais_b[0]:
+                      pais_b = separar(random.choice(linhas))
+
+                  nome_misturado = names.mix(pais_a[1], pais_b[1])
+                  
+                  # O formatsvg precisa dos caminhos assim:
+                  bandeira_a = f"flags/{pais_a[0]}.svg"
+                  bandeira_b = f"flags/{pais_b[0]}.svg"
+                  
+                  # Executa a mistura
+                  formatsvg.mix(bandeira_a, bandeira_b)
+                  
+                  nome_final = f"mashup_{i}.png"
+                  destino = os.path.join(PASTA_SITE, nome_final)
+                  
+                  if os.path.exists("output.png"):
+                      shutil.move("output.png", destino)
+                      cardapio.append({
+                          "arquivo": nome_final,
+                          "nome": nome_misturado
+                      })
+                      print(f"Sucesso: {nome_misturado}")
+                  
+              except Exception as e:
+                  print(f"Erro na {i}: {e}")
+
+          with open(os.path.join(PASTA_SITE, "menu.json"), "w") as f:
+              json.dump(cardapio, f)
+          EOF
+
+      - name: Rodar o Cook
         run: python cook.py
 
-      # --- SALVAR RESULTADO ---
-      - name: Salvar Imagens Geradas
+      - name: Salvar Imagens
         run: |
-          git config --global user.name 'Bot Cozinheiro'
+          git config --global user.name 'Bot'
           git config --global user.email 'bot@noreply.github.com'
           git add img_bandeiras
-          git commit -m "Novas bandeiras geradas (Reparo Automático)" || echo "Nada novo para salvar"
+          git commit -m "Novas bandeiras" || echo "Nada novo"
           git push
