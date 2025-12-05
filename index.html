@@ -35,8 +35,7 @@
             <div class="absolute -inset-1 bg-gradient-to-b from-orange-600 to-purple-900 rounded-2xl blur opacity-50 group-hover:opacity-75 transition duration-1000"></div>
             
             <div class="relative bg-[#0a0a0a] rounded-xl overflow-hidden shadow-2xl border border-white/10 aspect-square">
-                <!-- A imagem vem do mesmo diretório -->
-                <img id="piva-img" 
+                <img id="piva-img"
                      class="w-full h-full object-cover transform hover:scale-105 transition duration-700" 
                      alt="Piva do Dia" 
                      onerror="this.src='https://placehold.co/1024x1024/1a1a1a/FFF?text=Aguardando+o+Robô...';">
@@ -61,69 +60,62 @@
         </div>
 
         <footer class="text-gray-600 text-xs mt-8">
-            <p>Datas Comemorapivas™ • Atualizado diariamente às 07:00</p>
+            <p>Datas Comemorapivas™ • Atualizado diariamente à meia-noite</p>
         </footer>
 
     </main>
 
     <script>
-    lucide.createIcons();
+        lucide.createIcons();
 
-    function getCodigoDataHoje() {
-        const hoje = new Date();
-        const dd = String(hoje.getDate()).padStart(2, '0');
-        const mm = String(hoje.getMonth() + 1).padStart(2, '0');
-        return `${dd}/${mm}`;
-    }
-
-    function getCaminhoImagemHoje() {
-        const hoje = new Date();
-        const dd = String(hoje.getDate()).padStart(2, '0');
-        const mm = String(hoje.getMonth() + 1).padStart(2, '0');
-        const codigo = `${dd}-${mm}`;
-        return `./output/${codigo}.png`;
-    }
-
-    async function carregarDados() {
-        try {
-            const time = new Date().getTime();
-            const response = await fetch(`./dados_do_dia.json?t=${time}`);
-            if (!response.ok) throw new Error("JSON não encontrado");
-            
-            const data = await response.json();
-            document.getElementById('titulo-feriado').innerText = data.feriado.toUpperCase();
-            document.getElementById('data-hoje').innerText = data.data;
-            document.getElementById('frase-meme').innerText = `"${data.frase}"`;
-        } catch (e) {
-            console.log("Sem JSON diário, modo estático por data.");
+        // Caminho da imagem de hoje: ./output_gemini/DD-MM.png
+        function getCaminhoImagemHoje() {
             const hoje = new Date();
-            const opcoes = { day: '2-digit', month: '2-digit', year: 'numeric' };
-            document.getElementById('data-hoje').innerText = hoje.toLocaleDateString('pt-BR', opcoes);
-            document.getElementById('titulo-feriado').innerText = "DATA COMEMORATIVA";
-            document.getElementById('frase-meme').innerText = "Carregando frase do piva...";
+            const dd = String(hoje.getDate()).padStart(2, '0');
+            const mm = String(hoje.getMonth() + 1).padStart(2, '0');
+            const codigo = `${dd}-${mm}`; // ex: 05-12
+            return `./output_gemini/${codigo}.png`;
         }
 
-        const imgPath = getCaminhoImagemHoje();
-        const timeImg = new Date().getTime();
-        document.getElementById('piva-img').src = `${imgPath}?t=${timeImg}`;
-    }
+        // Carregar dados (usa JSON se existir; senão, cai para modo simples)
+        async function carregarDados() {
+            try {
+                const time = new Date().getTime();
+                const response = await fetch(`./dados_do_dia.json?t=${time}`);
+                if (!response.ok) throw new Error("JSON não encontrado");
+                
+                const data = await response.json();
+                document.getElementById('titulo-feriado').innerText = data.feriado.toUpperCase();
+                document.getElementById('data-hoje').innerText = data.data;
+                document.getElementById('frase-meme').innerText = `"${data.frase}"`;
+            } catch (e) {
+                console.log("Sem JSON diário, modo estático por data.");
+                const hoje = new Date();
+                const opcoes = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                document.getElementById('data-hoje').innerText = hoje.toLocaleDateString('pt-BR', opcoes);
+                document.getElementById('titulo-feriado').innerText = "DATA COMEMORATIVA";
+                document.getElementById('frase-meme').innerText = "Carregando frase do piva...";
+            }
 
-    function updateTimer() {
-        const now = new Date();
-        const target = new Date();
-        target.setHours(7, 0, 0, 0);
-        if (now > target) target.setDate(target.getDate() + 1);
+            // Define a imagem do dia sempre pela pasta output_gemini
+            const imgPath = getCaminhoImagemHoje();
+            const timeImg = new Date().getTime();
+            document.getElementById('piva-img').src = `${imgPath}?t=${timeImg}`;
+        }
 
-        const diff = target - now;
-        const h = Math.floor(diff / (1000 * 60 * 60));
-        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const s = Math.floor((diff % (1000 * 60)) / 1000);
+        // Contador para meia-noite
+        function updateTimer() {
+            const now = new Date();
+            const target = new Date();
+            target.setHours(0, 0, 0, 0); // meia-noite
 
-        document.getElementById('countdown').innerText =
-            `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-    }
+            if (now > target) {
+                target.setDate(target.getDate() + 1);
+            }
 
-    carregarDados();
-    setInterval(updateTimer, 1000);
-    updateTimer();
-</script>
+            const diff = target - now;
+            const h = Math.floor(diff / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document
