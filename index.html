@@ -36,7 +36,7 @@
             
             <div class="relative bg-[#0a0a0a] rounded-xl overflow-hidden shadow-2xl border border-white/10 aspect-square">
                 <!-- A imagem vem do mesmo diretório -->
-                <img id="piva-img" src="./piva_do_dia.png" 
+                <img id="piva-img" 
                      class="w-full h-full object-cover transform hover:scale-105 transition duration-700" 
                      alt="Piva do Dia" 
                      onerror="this.src='https://placehold.co/1024x1024/1a1a1a/FFF?text=Aguardando+o+Robô...';">
@@ -67,60 +67,63 @@
     </main>
 
     <script>
-        lucide.createIcons();
+    lucide.createIcons();
 
-        // 1. Carregar os dados (JSON gerado pelo Python)
-        async function carregarDados() {
-            try {
-                // Adiciona timestamp para o navegador não usar cache velho
-                const time = new Date().getTime();
-                const response = await fetch(`./dados_do_dia.json?t=${time}`);
-                if (!response.ok) throw new Error("JSON não encontrado");
-                
-                const data = await response.json();
+    function getCodigoDataHoje() {
+        const hoje = new Date();
+        const dd = String(hoje.getDate()).padStart(2, '0');
+        const mm = String(hoje.getMonth() + 1).padStart(2, '0');
+        return `${dd}/${mm}`;
+    }
 
-                document.getElementById('titulo-feriado').innerText = data.feriado.toUpperCase();
-                document.getElementById('data-hoje').innerText = data.data;
-                document.getElementById('frase-meme').innerText = `"${data.frase}"`;
-                
-                // Força recarregamento da imagem
-                document.getElementById('piva-img').src = `./piva_do_dia.png?t=${time}`;
+    function getCaminhoImagemHoje() {
+        const hoje = new Date();
+        const dd = String(hoje.getDate()).padStart(2, '0');
+        const mm = String(hoje.getMonth() + 1).padStart(2, '0');
+        const codigo = `${dd}-${mm}`;
+        return `./output/${codigo}.png`;
+    }
 
-            } catch (e) {
-                console.log("Aguardando primeira execução do robô...");
-                document.getElementById('titulo-feriado').innerText = "CALMA LÁ...";
-                document.getElementById('frase-meme').innerText = "O robô está acordando. Volte em alguns minutos.";
-            }
+    async function carregarDados() {
+        try {
+            const time = new Date().getTime();
+            const response = await fetch(`./dados_do_dia.json?t=${time}`);
+            if (!response.ok) throw new Error("JSON não encontrado");
+            
+            const data = await response.json();
+            document.getElementById('titulo-feriado').innerText = data.feriado.toUpperCase();
+            document.getElementById('data-hoje').innerText = data.data;
+            document.getElementById('frase-meme').innerText = `"${data.frase}"`;
+        } catch (e) {
+            console.log("Sem JSON diário, modo estático por data.");
+            const hoje = new Date();
+            const opcoes = { day: '2-digit', month: '2-digit', year: 'numeric' };
+            document.getElementById('data-hoje').innerText = hoje.toLocaleDateString('pt-BR', opcoes);
+            document.getElementById('titulo-feriado').innerText = "DATA COMEMORATIVA";
+            document.getElementById('frase-meme').innerText = "Carregando frase do piva...";
         }
 
-        // 2. Lógica do Contador (Reset às 07:00 BRT / 10:00 UTC)
-        function updateTimer() {
-            const now = new Date();
-            const target = new Date();
-            
-            // Define o alvo para as 07:00 da manhã
-            // Nota: Se o servidor do usuário estiver em fuso diferente, pode variar. 
-            // O ideal seria usar UTC, mas para simplificar vamos usar hora local do navegador.
-            target.setHours(7, 0, 0, 0);
+        const imgPath = getCaminhoImagemHoje();
+        const timeImg = new Date().getTime();
+        document.getElementById('piva-img').src = `${imgPath}?t=${timeImg}`;
+    }
 
-            // Se já passou das 7h hoje, aponta para amanhã
-            if (now > target) {
-                target.setDate(target.getDate() + 1);
-            }
+    function updateTimer() {
+        const now = new Date();
+        const target = new Date();
+        target.setHours(7, 0, 0, 0);
+        if (now > target) target.setDate(target.getDate() + 1);
 
-            const diff = target - now;
-            
-            const h = Math.floor((diff / (1000 * 60 * 60)));
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((diff % (1000 * 60)) / 1000);
+        const diff = target - now;
+        const h = Math.floor(diff / (1000 * 60 * 60));
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((diff % (1000 * 60)) / 1000);
 
-            document.getElementById('countdown').innerText = 
-                `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-        }
+        document.getElementById('countdown').innerText =
+            `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
 
-        carregarDados();
-        setInterval(updateTimer, 1000);
-        updateTimer();
-    </script>
-</body>
-</html>
+    carregarDados();
+    setInterval(updateTimer, 1000);
+    updateTimer();
+</script>
