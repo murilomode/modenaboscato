@@ -1,0 +1,17 @@
+{
+  "name": "BUCETA LANCHES",
+  "short_name": "BL",
+  "description": "Hamburgueria em Xanxere com smash, combos e caos gourmet.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#d7f0b5",
+  "theme_color": "#5fb74f",
+  "icons": [
+    {
+      "src": "assets/logo-original.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
