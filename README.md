@@ -1,38 +1,70 @@
-# Murilo Modena Boscato - Professional Portfolio
+# Murilo Modena Boscato - Application Casebook
 
-Static hospitality portfolio and F&B operations work sample, ready for GitHub Pages.
+Professional application website focused on luxury food and beverage outlet management.
 
-## Publish with GitHub Pages
+The site combines verified career experience with an independent business intelligence case covering outlet profitability, productivity, inventory control and service-quality guardrails.
 
-1. Create a new GitHub repository.
-2. Upload the contents of this folder to the repository root.
-3. Open **Settings > Pages**.
-4. Under **Build and deployment**, select **Deploy from a branch**.
-5. Select the `main` branch and `/ (root)` folder, then save.
-6. In **Custom domain**, enter `modenaboscato.com`.
-7. Configure the domain DNS using GitHub's current official instructions:
-   https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site
-8. Enable **Enforce HTTPS** after GitHub finishes issuing the certificate.
+## Live Site
 
-Important: preserve the domain's existing MX and email-related TXT records so `murilo@modenaboscato.com` continues working.
+[modenaboscato.com](https://modenaboscato.com/)
 
-The included `CNAME` file already contains `modenaboscato.com`.
+## Project Highlights
 
-## Files
+- Responsive, accessible static website
+- Professional profile and chronological experience
+- Downloadable CV
+- Independent **Outlet Performance Intelligence** case
+- Print-friendly case layout
+- Custom-domain support for GitHub Pages
+- No framework, package installation or build step required
 
-- `index.html`: professional portfolio
-- `work-sample.html`: luxury F&B outlet operations work sample
-- `styles.css`: responsive visual system and print styles
-- `script.js`: navigation, reveal effects and print action
-- `assets/luxury-lobby-bar.webp`: original generated hero image
-- `assets/murilo-modena-boscato-cv.pdf`: downloadable CV
+## Important Scope Note
 
-## Before publishing
+All financial figures in the business intelligence case are hypothetical. They demonstrate analytical reasoning and are not Langham data, industry benchmarks or claimed professional results.
 
-Confirm that these statements still match the submitted CV and cover letter:
+Verified career statements and illustrative case assumptions are intentionally presented separately.
 
-- Australian work rights
-- Available immediately
-- Open to Gold Coast relocation
+## Project Structure
 
-No build command is required. Open `index.html` directly to preview the site.
+```text
+portfolio-site/
+|-- assets/
+|   |-- luxury-lobby-bar.webp
+|   |-- murilo-modena-boscato.png
+|   `-- murilo-modena-boscato-cv.pdf
+|-- docs/
+|   |-- CONTENT-MAINTENANCE.md
+|   `-- DEPLOYMENT.md
+|-- .nojekyll
+|-- 404.html
+|-- CNAME
+|-- index.html
+|-- robots.txt
+|-- script.js
+|-- sitemap.xml
+|-- styles.css
+`-- work-sample.html
+```
+
+## Local Preview
+
+Open `index.html` in a browser. The site does not require a local server.
+
+## Publishing
+
+See [GitHub Pages deployment](docs/DEPLOYMENT.md) for repository, Pages and custom-domain instructions.
+
+## Content Updates
+
+See [Content maintenance](docs/CONTENT-MAINTENANCE.md) before changing professional claims, availability, the CV or case assumptions.
+
+## Technology
+
+- Semantic HTML5
+- Responsive CSS
+- Vanilla JavaScript
+- GitHub Pages
+
+## Ownership
+
+The personal information, CV, portrait and written case material are provided for professional presentation. No reuse licence is granted by this repository.
