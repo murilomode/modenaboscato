@@ -1,511 +1,219 @@
 <!doctype html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>BUCETA LANCHES | Smash, combos e caos gourmet</title>
-    <meta
-      name="description"
-      content="BUCETA LANCHES em Xanxerê - SC: smash burgers, combos, batata crocante, molho da casa e pedidos online."
-    />
-    <meta name="theme-color" content="#5fb74f" />
-    <meta property="og:title" content="BUCETA LANCHES" />
-    <meta property="og:description" content="Smash, combos e caos gourmet em Xanxerê - SC." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="assets/logo-original.png" />
-    <link rel="icon" href="assets/logo-original.png" type="image/png" />
-    <link rel="manifest" href="site.webmanifest" />
-    <link rel="preload" as="image" href="assets/logo-original.png" />
-    <link rel="preload" as="image" href="assets/hero-burgers.png" />
-    <link rel="stylesheet" href="styles.css" />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Restaurant",
-        "name": "BUCETA LANCHES",
-        "servesCuisine": "Hambúrguer artesanal",
-        "priceRange": "$$",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Xanxerê",
-          "addressRegion": "SC",
-          "addressCountry": "BR"
-        },
-        "openingHours": "Tu-Su 18:00-02:00"
-      }
-    </script>
-  </head>
-  <body>
-    <div class="ambient" aria-hidden="true"></div>
-    <div class="noise" aria-hidden="true"></div>
-    <div class="loader" data-loader aria-hidden="true">
-      <div>
-        <span data-loader-count>0%</span>
-        <p>Carregando a chapa</p>
-      </div>
-      <b></b>
-    </div>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Murilo Modena Boscato - hospitality operations, guest experience and people leadership.">
+  <meta name="theme-color" content="#132a24">
+  <meta property="og:title" content="Murilo Modena Boscato | Hospitality Operations">
+  <meta property="og:description" content="Hospitality operations, guest experience and people leadership portfolio.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://modenaboscato.com/">
+  <meta property="og:image" content="https://modenaboscato.com/assets/luxury-lobby-bar.webp">
+  <title>Murilo Modena Boscato | Hospitality Operations</title>
+  <link rel="preload" href="assets/luxury-lobby-bar.webp" as="image" type="image/webp">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Murilo Modena Boscato",
+    "url": "https://modenaboscato.com/",
+    "email": "mailto:murilo@modenaboscato.com",
+    "jobTitle": "Hospitality Operations Professional",
+    "knowsLanguage": ["English", "Spanish", "Portuguese"]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-    <header class="site-header" data-header>
-      <a class="brand" href="#top" aria-label="Voltar ao topo">
-        <img class="brand-logo" src="assets/logo-original.png" alt="Logo Buceta Lanches" />
-        <span class="brand-text">
-          <strong>BUCETA</strong>
-          <small>LANCHES</small>
-        </span>
-      </a>
+  <header class="site-header" data-header>
+    <a class="wordmark" href="#top" aria-label="Murilo Modena Boscato, home">MMB</a>
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
+      <a href="#profile">Profile</a>
+      <a href="#experience">Experience</a>
+      <a href="#sample">Work sample</a>
+      <a href="#credentials">Credentials</a>
+      <a class="nav-contact" href="mailto:murilo@modenaboscato.com">Contact</a>
+    </nav>
+  </header>
 
-      <nav class="nav" data-nav aria-label="Navegação principal">
-        <a href="#vision">A casa</a>
-        <a href="#combo">Combo</a>
-        <a href="#cardapio">Cardápio</a>
-        <a href="#pedido">Pedido</a>
-        <a href="#endereco">Xanxerê</a>
-      </nav>
-
-      <div class="header-actions">
-        <a class="login-link" href="#pedido">Entrar</a>
-        <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false">
-          <span></span>
-          <span></span>
-          <span></span>
-          Menu
-        </button>
-        <button class="cart-button" type="button" data-cart-open>
-          <span>Pedido</span>
-          <strong data-cart-count>0</strong>
-        </button>
-      </div>
-    </header>
-
-    <div class="mega-menu" data-mega-menu aria-hidden="true">
-      <div class="mega-menu-inner">
-        <p>Explore Buceta Lanches</p>
-        <a href="#vision">A casa</a>
-        <a href="#cardapio">Cardápio</a>
-        <a href="#combo">Combo da casa</a>
-        <a href="#caos">Diferenciais</a>
-        <a href="#endereco">Xanxerê</a>
-      </div>
-      <div class="mega-menu-meta">
-        <span>Xanxerê - SC</span>
-        <span>18h - 02h</span>
-        <span>Buceta Lanches, hamburgueria da cidade</span>
-      </div>
-    </div>
-
-    <main id="top">
-      <section class="hero" data-spotlight>
-        <img
-          class="hero-photo"
-          src="assets/hero-burgers.png"
-          alt="Dois hambúrgueres com queijo, batata frita e refrigerante em uma bancada de lanchonete"
-        />
-        <div class="hero-overlay"></div>
-
-        <div class="region-strip" aria-label="Mapa de atuação em Xanxerê">
-          <article>
-            <strong>09</strong>
-            <span>lanches da casa</span>
-          </article>
-          <article>
-            <strong>12</strong>
-            <span>bairros de Xanxerê</span>
-          </article>
-          <article>
-            <strong>04</strong>
-            <span>combos brabos</span>
-          </article>
+  <main id="main">
+    <section id="top" class="hero" aria-labelledby="hero-title">
+      <img class="hero-image" src="assets/luxury-lobby-bar.webp" alt="Luxury hotel lobby bar and afternoon tea lounge prepared for service" width="1672" height="941">
+      <div class="hero-shade"></div>
+      <div class="hero-content shell">
+        <p class="eyebrow">Hospitality operations · Guest experience · People leadership</p>
+        <h1 id="hero-title">Murilo Modena Boscato</h1>
+        <p class="hero-copy">Service-centred hospitality and operations professional combining hotel guest-service experience with the coordination of personnel routines for more than 1,500 employees.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="work-sample.html">View operations sample</a>
+          <a class="button button-secondary" href="assets/murilo-modena-boscato-cv.pdf" download>Download CV</a>
         </div>
-
-        <aside class="word-rail" aria-hidden="true">
-          <span>Buceta</span>
-          <span>Lanches</span>
-          <span>Chapa</span>
-          <span>Molho</span>
-          <span>Entrega</span>
-        </aside>
-
-        <div class="hero-content">
-          <div class="status-pill">
-            <span class="pulse"></span>
-            Aberto hoje em Xanxerê
-          </div>
-
-          <p class="eyebrow">Buceta Lanches apresenta</p>
-          <h1>
-            Buceta Lanches
-            <span>na chapa quente.</span>
-          </h1>
-          <p class="hero-copy">
-            Verde de meme clássico, marrom de pão na chapa e amarelo de snack
-            na mão. Um ponto de smash, batata e molho da casa para chamar de
-            nosso em Xanxerê.
-          </p>
-
-          <div class="hero-actions">
-            <a class="button primary magnet" href="#cardapio">Explodir o cardápio</a>
-            <a class="button glass" href="#combo">Montar combo</a>
-          </div>
-
-          <div class="hero-grid" aria-label="Indicadores da lanchonete">
-            <article>
-              <strong>25-40</strong>
-              <span>minutos de entrega</span>
-            </article>
-            <article>
-              <strong>4.9</strong>
-              <span>avaliação média</span>
-            </article>
-            <article>
-              <strong>R$ 12</strong>
-              <span>cupom de primeira fome</span>
-            </article>
-          </div>
-        </div>
-
-        <aside class="hero-panel" aria-label="Mascote da marca">
-          <img
-            class="logo-card"
-            src="assets/logo-original.png"
-            alt="Logo original Buceta Lanches com mascote de chapéu segurando snack e dinheiro"
-          />
-          <p>Logo original aplicado como peça central da marca: verde, chapéu, snack amarelo e dinheiro na mão.</p>
-        </aside>
-        <a class="scroll-cue" href="#vision" aria-label="Descer para a visão">
-          Scroll
-          <span></span>
-        </a>
-      </section>
-
-      <div class="marquee" aria-hidden="true">
-        <div>
-          <span>SMASH</span>
-          <span>BATATA</span>
-          <span>MOLHO BL</span>
-          <span>COMBO DA MADRUGA</span>
-          <span>SEM FRESCURA</span>
-          <span>SMASH</span>
-          <span>BATATA</span>
-          <span>MOLHO BL</span>
-          <span>COMBO DA MADRUGA</span>
-          <span>SEM FRESCURA</span>
+        <div class="hero-status" aria-label="Professional availability">
+          <span>Australian work rights</span>
+          <span>Available immediately</span>
+          <span>Open to Gold Coast relocation</span>
         </div>
       </div>
+    </section>
 
-      <section class="manifest" id="vision">
-        <aside class="manifest-index" aria-label="Temas da marca">
-          <a class="is-active" href="#casa" data-manifest-link="A casa">A casa</a>
-          <a href="#cardapio-manifesto" data-manifest-link="Cardápio">Cardápio</a>
-          <a href="#chapa" data-manifest-link="Chapa">Chapa</a>
-          <a href="#delivery" data-manifest-link="Delivery">Delivery</a>
-          <a href="#xanxere" data-manifest-link="Xanxerê">Xanxerê</a>
-        </aside>
+    <section class="signal-band" aria-label="Professional highlights">
+      <div class="shell signal-grid">
+        <div class="signal-item reveal">
+          <strong>1,500+</strong>
+          <span>employees supported</span>
+        </div>
+        <div class="signal-item reveal">
+          <strong>3</strong>
+          <span>working languages</span>
+        </div>
+        <div class="signal-item reveal">
+          <strong>Hotel</strong>
+          <span>guest-service foundation</span>
+        </div>
+        <div class="signal-item reveal">
+          <strong>Now</strong>
+          <span>available to relocate</span>
+        </div>
+      </div>
+    </section>
 
-        <article class="manifest-panel reveal" id="casa" data-manifest-panel="A casa">
-          <span>01</span>
-          <p>A casa</p>
-          <h2>Buceta Lanches: nome de meme, fome de verdade.</h2>
-          <small>
-            O logo original entra como assinatura visual principal, com verde
-            vivo, pão marrom, chapéu escuro e amarelo de snack.
-          </small>
-        </article>
+    <section id="profile" class="section profile-section">
+      <div class="shell split-layout">
+        <div class="section-intro reveal">
+          <p class="section-kicker">Operating profile</p>
+          <h2>Calm service.<br>Clear standards.</h2>
+        </div>
+        <div class="profile-copy reveal">
+          <p class="lead">I work at the point where people, process and guest experience meet.</p>
+          <p>My current role requires coordination across departments, accurate administration, prompt issue resolution and consistent communication at scale. Earlier hotel experience built my understanding of reservations, front-desk support, service recovery, upselling and cross-department teamwork.</p>
+          <p>I bring a multilingual, luxury-minded approach to service, with a focus on colleague engagement, operational consistency and memorable guest experiences.</p>
+          <dl class="capability-list">
+            <div><dt>Service</dt><dd>Guest satisfaction, complaint handling and service recovery</dd></div>
+            <div><dt>Operations</dt><dd>SOPs, shift coordination and cross-department workflows</dd></div>
+            <div><dt>People</dt><dd>Team briefings, coaching and colleague engagement</dd></div>
+            <div><dt>Commercial</dt><dd>Upselling, productivity and cost-awareness</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
 
-        <article class="manifest-panel reveal" id="cardapio-manifesto" data-manifest-panel="Cardápio">
-          <span>02</span>
-          <p>Cardápio</p>
-          <h2>Cada lanche vira um projeto. Cada combo vira destino.</h2>
-          <small>
-            A navegação mantém a sofisticação da referência, mas os nomes voltam
-            para o universo da lanchonete.
-          </small>
-        </article>
-
-        <article class="manifest-panel reveal" id="chapa" data-manifest-panel="Chapa">
-          <span>03</span>
-          <p>Chapa</p>
-          <h2>Verde no fundo, chapa no centro, fome no primeiro scroll.</h2>
-          <small>
-            A paleta agora parte do logo que você mandou: verde limão, verde
-            escuro, marrom tostado, amarelo e preto oliva.
-          </small>
-        </article>
-
-        <article class="manifest-panel reveal" id="delivery" data-manifest-panel="Delivery">
-          <span>04</span>
-          <p>Delivery</p>
-          <h2>Entrega em Xanxerê, identidade forte, carrinho funcionando.</h2>
-          <small>
-            O botão de pedido monta carrinho, aplica cupom e deixa tudo pronto
-            para fechar no atendimento.
-          </small>
-        </article>
-
-        <article class="manifest-panel reveal" id="xanxere" data-manifest-panel="Xanxerê">
-          <span>05</span>
-          <p>Xanxerê</p>
-          <h2>Feito para virar ponto conhecido na cidade.</h2>
-          <small>
-            Atendimento em Xanxerê - SC, com retirada, delivery e aquele combo
-            de madrugada que vira assunto no grupo.
-          </small>
-        </article>
-      </section>
-
-      <section class="section" id="cardapio">
+    <section id="experience" class="section experience-section">
+      <div class="shell">
         <div class="section-heading reveal">
-          <p class="section-kicker">Cardápio desde 2021</p>
-          <h2>Os clássicos da Buceta Lanches</h2>
-          <p>
-            Nomes pesados, chapa quente e item legível. Entram os clássicos dos
-            cardápios que você mandou; saem só os ruídos e erros de escrita.
-          </p>
-        </div>
-
-        <div class="tabs reveal" role="tablist" aria-label="Filtrar cardápio">
-          <button class="is-active" type="button" data-filter="todos">Tudo</button>
-          <button type="button" data-filter="lanches">Lanches</button>
-          <button type="button" data-filter="pasteis">Pastéis</button>
-          <button type="button" data-filter="acompanhamentos">Acompanhamentos</button>
-          <button type="button" data-filter="bebidas">Bebidas</button>
-          <button type="button" data-filter="sobremesas">Sobremesas</button>
-        </div>
-
-        <div class="menu-grid" data-menu-grid aria-live="polite"></div>
-      </section>
-
-      <section class="combo-lab" id="combo">
-        <div class="combo-copy reveal">
-          <p class="section-kicker">Laboratório do combo</p>
-          <h2>Monte o combo sem vergonha</h2>
-          <p>
-            Escolha o lanche principal, junte acompanhamento, molho e bebida. O
-            total recalcula na hora e a régua mostra o nível de caos da mesa.
-          </p>
-        </div>
-
-        <form class="combo-builder reveal" data-combo-form>
-          <fieldset>
-            <legend>Base</legend>
-            <label>
-              <input type="radio" name="base" value="21.9" checked />
-              <span>Bucetinha Smash</span>
-              <strong>R$ 21,90</strong>
-            </label>
-            <label>
-              <input type="radio" name="base" value="24.9" />
-              <span>X-Bucetão</span>
-              <strong>R$ 24,90</strong>
-            </label>
-            <label>
-              <input type="radio" name="base" value="31.9" />
-              <span>X-Enrabado</span>
-              <strong>R$ 31,90</strong>
-            </label>
-          </fieldset>
-
-          <fieldset>
-            <legend>Acompanhamentos</legend>
-            <label>
-              <input type="checkbox" name="addon" value="9.9" checked />
-              <span>Bucetapas</span>
-              <strong>R$ 9,90</strong>
-            </label>
-            <label>
-              <input type="checkbox" name="addon" value="6.5" />
-              <span>Chá de Buceta</span>
-              <strong>R$ 6,50</strong>
-            </label>
-            <label>
-              <input type="checkbox" name="addon" value="11.9" />
-              <span>Anéis de Cebuceta</span>
-              <strong>R$ 11,90</strong>
-            </label>
-          </fieldset>
-
-          <div class="combo-total">
-            <span>Total do combo</span>
-            <strong data-combo-total>R$ 31,80</strong>
+          <div>
+            <p class="section-kicker">Experience</p>
+            <h2>Built across service and scale</h2>
           </div>
-
-          <div class="chaos-meter" aria-label="Nível de caos do pedido">
-            <span data-chaos-bar></span>
-          </div>
-          <p class="chaos-label" data-chaos-label>Caos moderado. Ainda cabe dignidade.</p>
-
-          <button class="button primary full" type="submit">Adicionar combo ao carrinho</button>
-        </form>
-      </section>
-
-      <section class="section feature-stack" id="caos">
-        <div class="section-heading reveal">
-          <p class="section-kicker">Diferenciais</p>
-          <h2>O que deixa a home mais parruda</h2>
+          <p>Reverse-chronological experience, from large-scale people operations to hands-on hotel guest service.</p>
         </div>
 
-        <div class="feature-grid">
-          <article class="feature-card reveal">
-            <span>01</span>
-            <h3>Visual memorável</h3>
-            <p>Paleta quente, contraste alto, textura, motion e hero fotográfico.</p>
-          </article>
-          <article class="feature-card reveal">
-            <span>02</span>
-            <h3>Carrinho real</h3>
-            <p>Itens, quantidades, subtotal, taxa de entrega, cupom e total final.</p>
-          </article>
-          <article class="feature-card reveal">
-            <span>03</span>
-            <h3>Feito para Xanxerê</h3>
-            <p>Linguagem local, retirada na cidade e delivery para os bairros atendidos.</p>
-          </article>
-          <article class="feature-card reveal">
-            <span>04</span>
-            <h3>Responsivo</h3>
-            <p>Mobile com menu compacto, cards em coluna e botões fáceis de tocar.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section order-section" id="pedido">
-        <div class="order-copy reveal">
-          <p class="section-kicker">Pedido rápido</p>
-          <h2>Monte seu pedido em segundos</h2>
-          <p>
-            Escolha os itens, aplique cupom e confira o total antes de enviar
-            para o atendimento da casa.
-          </p>
-        </div>
-
-        <div class="checkout-card reveal">
-          <div class="checkout-top">
-            <div>
-              <span>Retirada</span>
-              <strong>Xanxerê - SC</strong>
+        <div class="timeline">
+          <article class="timeline-row reveal">
+            <div class="timeline-date">2025 - Present</div>
+            <div class="timeline-main">
+              <p class="timeline-org">Municipality of Xanxere</p>
+              <h3>General Coordinator of Personnel Management</h3>
+              <p>Coordinates daily personnel routines for more than 1,500 employees, supervises cross-department workflows and supports consistent, timely service delivery.</p>
+              <div class="tag-list"><span>Team coordination</span><span>SOPs</span><span>Issue resolution</span></div>
             </div>
-            <button type="button" data-cart-open>Editar carrinho</button>
-          </div>
-          <div class="timeline" aria-label="Etapas do pedido">
-            <span class="is-on">Pedido</span>
-            <span class="is-on">Chapa</span>
-            <span>Entrega</span>
-          </div>
-          <button class="button primary full" type="button" data-finalize>
-            Confirmar pedido
-          </button>
-          <p class="checkout-note" data-checkout-note aria-live="polite"></p>
+          </article>
+          <article class="timeline-row reveal">
+            <div class="timeline-date">2023 - 2025</div>
+            <div class="timeline-main">
+              <p class="timeline-org">Municipality of Xanxere</p>
+              <h3>Administrative Assistant, HR</h3>
+              <p>Supported onboarding, benefits, employee records and service enquiries while maintaining accurate information flows across the team.</p>
+              <div class="tag-list"><span>Onboarding</span><span>Records</span><span>Internal service</span></div>
+            </div>
+          </article>
+          <article class="timeline-row reveal">
+            <div class="timeline-date">2019 - 2021</div>
+            <div class="timeline-main">
+              <p class="timeline-org">KNN Idiomas</p>
+              <h3>English and Spanish Teacher</h3>
+              <p>Developed adaptable communication, presentation, coaching and motivation skills across varied personalities and confidence levels.</p>
+              <div class="tag-list"><span>Coaching</span><span>Presentation</span><span>Multilingual</span></div>
+            </div>
+          </article>
+          <article class="timeline-row reveal">
+            <div class="timeline-date">2018 - 2019</div>
+            <div class="timeline-main">
+              <p class="timeline-org">Seville Park Hotel</p>
+              <h3>Administrative Services Apprentice</h3>
+              <p>Supported high-traffic front-desk and reservation operations, guest complaints, service recovery, shift communication, housekeeping coordination and hotel service upselling.</p>
+              <div class="tag-list"><span>Guest service</span><span>Reservations</span><span>Service recovery</span></div>
+            </div>
+          </article>
         </div>
-      </section>
-
-      <section class="section social-proof">
-        <div class="quote-card reveal">
-          <p>
-            "Achei que era só resenha do grupo, pedi por curiosidade e virou meu
-            combo de sexta."
-          </p>
-          <strong>Cliente de Xanxerê, 23h47</strong>
-        </div>
-        <div class="quote-card reveal">
-          <p>
-            "O nome chama atenção, mas o que faz voltar é a chapa, o molho e a
-            batata crocante."
-          </p>
-          <strong>Mesa da casa</strong>
-        </div>
-      </section>
-
-      <section class="section publish" id="endereco">
-        <div class="reveal">
-          <p class="section-kicker">Xanxerê - SC</p>
-          <h2>Pedido, retirada e delivery na cidade.</h2>
-          <p>
-            A BUCETA LANCHES atende em Xanxerê com lanches de chapa, combos,
-            extras e cupom de primeira fome.
-          </p>
-        </div>
-
-        <ol class="deploy-steps reveal">
-          <li>Retirada em Xanxerê - SC.</li>
-          <li>Delivery conforme disponibilidade da noite.</li>
-          <li>Atendimento de terça a domingo, das 18h às 02h.</li>
-          <li>Cupom de estreia: <strong>PRIMEIRAFOME</strong>.</li>
-          <li>Pedidos pelo carrinho do site.</li>
-        </ol>
-      </section>
-
-      <section class="faq">
-        <details open>
-          <summary>Atende em Xanxerê?</summary>
-          <p>Sim. A casa está posicionada para retirada e delivery em Xanxerê - SC.</p>
-        </details>
-        <details>
-          <summary>Consigo pedir pelo WhatsApp?</summary>
-          <p>Sim. O pedido pode ser enviado para o atendimento com os itens do carrinho.</p>
-        </details>
-        <details>
-          <summary>O nome é piada interna?</summary>
-          <p>
-            É a graça da marca entre amigos, mas o cardápio, o pedido e a
-            presença na cidade são tratados como coisa séria.
-          </p>
-        </details>
-      </section>
-    </main>
-
-    <aside class="cart-drawer" data-cart-drawer aria-hidden="true" aria-label="Carrinho">
-      <div class="drawer-panel">
-        <header>
-          <div>
-            <span>Seu pedido</span>
-            <strong>BUCETA LANCHES</strong>
-          </div>
-          <button type="button" data-cart-close aria-label="Fechar carrinho">×</button>
-        </header>
-
-        <div class="cart-items" data-cart-items></div>
-
-        <form class="coupon" data-coupon-form>
-          <label for="coupon">Cupom</label>
-          <div>
-            <input id="coupon" name="coupon" placeholder="PRIMEIRAFOME" autocomplete="off" />
-            <button type="submit">Aplicar</button>
-          </div>
-          <p data-coupon-note></p>
-        </form>
-
-        <dl class="cart-summary">
-          <div>
-            <dt>Subtotal</dt>
-            <dd data-subtotal>R$ 0</dd>
-          </div>
-          <div>
-            <dt>Taxa de entrega</dt>
-            <dd data-fee>R$ 6</dd>
-          </div>
-          <div>
-            <dt>Desconto</dt>
-            <dd data-discount>R$ 0</dd>
-          </div>
-          <div class="summary-total">
-            <dt>Total</dt>
-            <dd data-grand-total>R$ 0</dd>
-          </div>
-        </dl>
-
-        <button class="button primary full" type="button" data-finalize>
-          Fechar pedido
-        </button>
       </div>
-    </aside>
+    </section>
 
-    <div class="toast" data-toast role="status" aria-live="polite"></div>
+    <section id="sample" class="section sample-section">
+      <div class="shell sample-layout">
+        <div class="sample-copy reveal">
+          <p class="section-kicker light">Independent work sample</p>
+          <h2>Luxury F&amp;B Outlet Operations Playbook</h2>
+          <p>A practical operating sample covering pre-shift communication, guest recovery, performance visibility and the first 90 days in a luxury outlet leadership role.</p>
+          <a class="button button-light" href="work-sample.html">Open the full sample</a>
+          <p class="sample-note">Prepared independently for hospitality management applications. No proprietary hotel data is used.</p>
+        </div>
 
-    <footer class="footer">
-      <p>BUCETA LANCHES, hamburgueria em Xanxerê - SC. Humor no nome, comida na chapa.</p>
-      <a href="#top">Voltar ao topo</a>
-    </footer>
+        <div class="sample-preview reveal" aria-label="Operations scorecard preview">
+          <div class="preview-topline">
+            <span>Daily outlet pulse</span>
+            <span>Illustrative framework</span>
+          </div>
+          <div class="metric-row"><span>Guest sentiment</span><strong>Observe · resolve · record</strong></div>
+          <div class="metric-row"><span>Service pace</span><strong>Arrival to farewell</strong></div>
+          <div class="metric-row"><span>Commercial focus</span><strong>Average spend · upsell</strong></div>
+          <div class="metric-row"><span>Team readiness</span><strong>Briefing · roles · risks</strong></div>
+          <div class="preview-footer">Standards become visible when the team can act on them.</div>
+        </div>
+      </div>
+    </section>
 
-    <script src="script.js"></script>
-  </body>
+    <section id="credentials" class="section credentials-section">
+      <div class="shell">
+        <div class="section-heading reveal">
+          <div>
+            <p class="section-kicker">Credentials</p>
+            <h2>Formal study, applied thinking</h2>
+          </div>
+          <p>Education that supports governance, communication and data-informed decision-making.</p>
+        </div>
+        <div class="credential-rows">
+          <article class="credential-row reveal"><span>2026</span><div><h3>Postgraduate Specialisation in Administrative Law</h3><p>Faculdade Iguacu, Brazil</p></div></article>
+          <article class="credential-row reveal"><span>2026</span><div><h3>Fundamentals of Quantitative Modeling</h3><p>Wharton Online, University of Pennsylvania · Coursera non-credit course</p></div></article>
+          <article class="credential-row reveal"><span>2025</span><div><h3>Bachelor's Degree in International Relations</h3><p>Unochapeco</p></div></article>
+        </div>
+        <div class="language-line reveal"><span>English · Fluent</span><span>Spanish · Advanced</span><span>Portuguese · Native</span></div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+      <div class="shell contact-layout reveal">
+        <p class="section-kicker light">Contact</p>
+        <h2>Ready to support a refined, people-first operation.</h2>
+        <div class="contact-actions">
+          <a class="button button-light" href="mailto:murilo@modenaboscato.com">murilo@modenaboscato.com</a>
+          <a class="button button-outline-light" href="assets/murilo-modena-boscato-cv.pdf" download>Download CV</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-inner">
+      <span>Murilo Modena Boscato</span>
+      <span>modenaboscato.com · <span data-year></span></span>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+</body>
 </html>

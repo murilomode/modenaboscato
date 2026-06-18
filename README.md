@@ -1,46 +1,38 @@
-# FlagsMashupBot
+# Murilo Modena Boscato - Professional Portfolio
 
-Live demo:
-http://flagsmashupbot.pythonanywhere.com/
+Static hospitality portfolio and F&B operations work sample, ready for GitHub Pages.
 
+## Publish with GitHub Pages
 
+1. Create a new GitHub repository.
+2. Upload the contents of this folder to the repository root.
+3. Open **Settings > Pages**.
+4. Under **Build and deployment**, select **Deploy from a branch**.
+5. Select the `main` branch and `/ (root)` folder, then save.
+6. In **Custom domain**, enter `modenaboscato.com`.
+7. Configure the domain DNS using GitHub's current official instructions:
+   https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site
+8. Enable **Enforce HTTPS** after GitHub finishes issuing the certificate.
 
-![alt text](https://i.imgur.com/LSepqer.png)
+Important: preserve the domain's existing MX and email-related TXT records so `murilo@modenaboscato.com` continues working.
 
-https://twitter.com/FlagsMashupBot
--------------------------------------------------------
+The included `CNAME` file already contains `modenaboscato.com`.
 
-## Prerequisites
- - Python3
- - Pycairo's [required files in your machine](https://pycairo.readthedocs.io/en/latest/getting_started.html)
+## Files
 
-### Clone the repo
-```bash
-git clone https://github.com/antooro/FlagsMashupBot
-````
+- `index.html`: professional portfolio
+- `work-sample.html`: luxury F&B outlet operations work sample
+- `styles.css`: responsive visual system and print styles
+- `script.js`: navigation, reveal effects and print action
+- `assets/luxury-lobby-bar.webp`: original generated hero image
+- `assets/murilo-modena-boscato-cv.pdf`: downloadable CV
 
-### Start a virtual environment
-**LINUX/OSX**: Inside the repo folder
-```bash
-python -m ./ # starts the venv in the current folder
-source bin/activate # On LINUX or OSX
-.\Scripts\activate # ONLY Windows
-```
+## Before publishing
 
-To exit the Virtual Environment on any OS
-```bash
-deactivate
-```
+Confirm that these statements still match the submitted CV and cover letter:
 
-### Install the requirements:
-```bash
-pip install -r requirements.txt
-```
+- Australian work rights
+- Available immediately
+- Open to Gold Coast relocation
 
-Try the image generator 
-
-```bash
-python formatsvg.py
-```
-
-It will generate 3 files: the 2 country flags, and the mashup flag
+No build command is required. Open `index.html` directly to preview the site.
