@@ -2,6 +2,8 @@ const header = document.querySelector('[data-header]');
 const menuButton = document.querySelector('.menu-toggle');
 const navigation = document.querySelector('.site-nav');
 const printButton = document.querySelector('[data-print]');
+const expandSamplesButton = document.querySelector('[data-expand-samples]');
+const sampleModules = Array.from(document.querySelectorAll('.sample-module'));
 
 if (header) {
   const updateHeader = () => header.classList.toggle('is-scrolled', window.scrollY > 24);
@@ -44,6 +46,38 @@ if (reducedMotion || !('IntersectionObserver' in window)) {
   }, { threshold: 0.12 });
   revealItems.forEach((item) => observer.observe(item));
 }
+
+if (expandSamplesButton && sampleModules.length) {
+  const updateExpandLabel = () => {
+    const allOpen = sampleModules.every((module) => module.open);
+    expandSamplesButton.textContent = allOpen ? 'Collapse all' : 'Expand all';
+  };
+
+  expandSamplesButton.addEventListener('click', () => {
+    const shouldOpen = !sampleModules.every((module) => module.open);
+    sampleModules.forEach((module) => { module.open = shouldOpen; });
+    updateExpandLabel();
+  });
+
+  sampleModules.forEach((module) => module.addEventListener('toggle', updateExpandLabel));
+  updateExpandLabel();
+}
+
+document.querySelectorAll('.sample-jump a').forEach((link) => {
+  link.addEventListener('click', () => {
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target?.matches('details')) target.open = true;
+  });
+});
+
+let printModuleState = [];
+window.addEventListener('beforeprint', () => {
+  printModuleState = sampleModules.map((module) => module.open);
+  sampleModules.forEach((module) => { module.open = true; });
+});
+window.addEventListener('afterprint', () => {
+  sampleModules.forEach((module, index) => { module.open = printModuleState[index] ?? module.open; });
+});
 
 if (printButton) printButton.addEventListener('click', () => window.print());
 

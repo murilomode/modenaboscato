@@ -14,6 +14,7 @@ The site combines verified career experience with an independent business intell
 - Professional profile and chronological experience
 - Downloadable CV
 - Independent **Outlet Performance Intelligence** case
+- Eight expandable **F&B Management Samples**
 - Print-friendly case layout
 - Custom-domain support for GitHub Pages
 - No framework, package installation or build step required
@@ -34,11 +35,13 @@ portfolio-site/
 |   `-- murilo-modena-boscato-cv.pdf
 |-- docs/
 |   |-- CONTENT-MAINTENANCE.md
+|   |-- IMPLEMENTATION-NOTES.md
 |   `-- DEPLOYMENT.md
 |-- .nojekyll
 |-- 404.html
 |-- CNAME
 |-- index.html
+|-- samples.html
 |-- robots.txt
 |-- script.js
 |-- sitemap.xml
@@ -57,6 +60,8 @@ See [GitHub Pages deployment](docs/DEPLOYMENT.md) for repository, Pages and cust
 ## Content Updates
 
 See [Content maintenance](docs/CONTENT-MAINTENANCE.md) before changing professional claims, availability, the CV or case assumptions.
+
+See [Implementation notes](docs/IMPLEMENTATION-NOTES.md) for the management samples, print behaviour and modelling assumptions.
 
 ## Technology
 

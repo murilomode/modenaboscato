@@ -20,7 +20,7 @@ Review these statements whenever the CV, availability or employment situation ch
 
 ## Illustrative Case Data
 
-The figures in `work-sample.html` are hypothetical. They must never be described as:
+The figures in `work-sample.html` and `samples.html` are hypothetical. They must never be described as:
 
 - Langham internal data;
 - actual hotel performance;
@@ -29,6 +29,8 @@ The figures in `work-sample.html` are hypothetical. They must never be described
 - guaranteed future results.
 
 Keep the scope note visible if the numbers, formulas or recommendations are changed.
+
+The finance overlay in `samples.html` uses a scenario-only COGS assumption of 28%. It is intentionally labelled as an assumption and should not be presented as an actual outlet result.
 
 ## Replacing the CV
 

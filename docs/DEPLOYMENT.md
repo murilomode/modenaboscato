@@ -50,10 +50,12 @@ Verify the following pages and actions:
 
 - `https://modenaboscato.com/`
 - `https://modenaboscato.com/work-sample.html`
+- `https://modenaboscato.com/samples.html`
 - CV download
 - Email links
 - Mobile navigation
 - Print case button
+- Expandable management samples and Print / PDF button
 - Portrait and hero image
 - `robots.txt`
 - `sitemap.xml`
