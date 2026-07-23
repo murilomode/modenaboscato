@@ -15,6 +15,7 @@ The site presents Murilo's local government people-operations experience through
 - HRIS workflow and payroll-ready data case study
 - Anonymised HR sample pack with specific mini-cases
 - Manrope and Inter typography for a cleaner personal-brand feel
+- Discreet official appointment record links for public-sector verification
 - Resume download
 - Custom-domain support
 - No framework or build step required

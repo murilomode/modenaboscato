@@ -9,13 +9,16 @@ The current website states that Murilo:
 - has Australian work rights;
 - is available immediately for interviews;
 - is currently in Brazil;
-- is ready to relocate to NSW or where required;
+- is ready to relocate within Australia;
 - has 3+ years of HR administration and people operations experience;
 - has experience with HR advice, HRIS updates, employee records, attendance, leave information, payroll movements, onboarding documentation, workforce reporting and confidential follow-up;
 - helped reduce the monthly payroll close window from about two weeks to four working days;
 - handles 100+ employee records or files in a normal week;
 - helped move internal communication into 1Doc, reducing missed requests to near-zero;
 - speaks fluent English, advanced Spanish and native Portuguese.
+- links to two public-sector appointment records published by the Municipal Official Gazette of Santa Catarina, Brazil:
+  - 2025 HR coordination designation: https://static.dom.sc.gov.br/?r=site/atoView&id=7168149
+  - 2023 administrative appointment: https://static.dom.sc.gov.br/?r=site/atoView&id=4952966
 
 Review these statements whenever the CV, availability, visa situation or employment situation changes.
 
@@ -43,6 +46,8 @@ Do not commit original certificates, identity documents or screenshots containin
 - employee names, employee IDs or private HR case details.
 
 Only publish the portrait and resume after confirming they are intentionally public.
+
+Appointment record links should stay discreet. Before publishing new official documents, check the destination page and any original file/PDF for CPF, address, signatures, private identifiers or wording that could be misunderstood by an Australian recruiter.
 
 ## Sample Content Rules
 
