@@ -213,9 +213,6 @@ p { margin: 0; }
 .dashboard-grid div span, .kpi-grid span { color: var(--gold-light); }
 .dashboard-grid strong { display: block; margin-top: 18px; font-family: var(--font-display); font-size: 40px; font-weight: 700; line-height: 1; }
 .dashboard-grid small { display: block; margin-top: 4px; color: rgba(255,255,255,.62); }
-.mini-bars { display: grid; grid-template-columns: repeat(6, 1fr); gap: 9px; align-items: end; height: 110px; padding: 20px; }
-.mini-bars span { display: block; height: var(--bar); min-height: 22px; background: linear-gradient(180deg, var(--gold-light), var(--clay)); border-radius: 2px 2px 0 0; }
-
 .experience-section { background: var(--paper); }
 .timeline { border-top: 1px solid var(--ink); }
 .timeline-row { display: grid; grid-template-columns: 190px 1fr; gap: 36px; padding: 34px 0; border-bottom: 1px solid var(--line); }
