@@ -1,36 +1,42 @@
-# F&B Management Samples - Implementation Notes
+# HR Advisor Portfolio - Implementation Notes
 
-## Files Added
+## Purpose
 
-- `samples.html`: eight expandable management samples covering operations, people, guest recovery and corporate finance.
-- `docs/IMPLEMENTATION-NOTES.md`: implementation and usage notes.
+This site turns Murilo's CV into a short evidence portfolio for HR Advisor / People & Culture roles.
+
+The main positioning is:
+
+- current local government personnel management work;
+- 1,500+ employees supported through HR/personnel routines;
+- employee records, attendance, leave information and payroll inputs;
+- workforce reporting and data quality;
+- onboarding documentation and process follow-up;
+- confidentiality and careful handling of people information.
 
 ## Files Updated
 
-- `index.html`: Samples navigation and calls to action.
-- `work-sample.html`: link to the samples page.
-- `styles.css`: responsive samples layout and print rules.
-- `script.js`: expand/collapse controls, anchor behaviour and print expansion.
-- `sitemap.xml`: public URL for `samples.html`.
-- Repository documentation.
+- `index.html`: concise recruiter-facing homepage and document links.
+- `work-sample.html`: local government HR operations case.
+- `samples.html`: practical HR sample pack.
+- `styles.css`: responsive layout, sample modules and print behaviour.
+- `script.js`: navigation, reveal, print and sample expand/collapse behaviour.
+- `sitemap.xml`: public URLs for the three pages.
+- `README.md` and documentation.
 
 ## Preview Locally
 
-Open `samples.html` directly in a browser. No build command or local server is required.
+Open `index.html` directly in a browser. No build command or local server is required.
 
-## Print or Export to PDF
+## Print or Export Samples
 
 1. Open `samples.html`.
-2. Select **Print / PDF** in the header.
-3. All management modules open automatically for printing.
-4. Choose the browser's PDF destination or a physical printer.
-5. Closed modules return to their previous state after printing.
+2. Select **Expand all** if needed.
+3. Select **Print / PDF** in the header.
+4. The modules open automatically for printing.
 
-## Assumptions
+## Content Assumptions
 
-- All outlet figures are illustrative.
-- The finance overlay uses weekly revenue of A$72,000, labour cost of 36%, waste of 2% and a scenario-only COGS assumption of 28%.
-- COGS in the bridge is modelled before separately tracked waste so that the waste line remains visible and is not double-counted.
-- The annualised impact is a mathematical illustration, not a forecast.
-- Beverage references remain strategic and do not provide alcohol preparation or procurement instructions.
-- Actual property systems, authority limits, targets and compliance procedures would replace the sample assumptions in practice.
+- The case study is sanitised and generalised.
+- The sample pack demonstrates method and structure, not private employee information.
+- Any Australian Awards, Enterprise Agreements or policies must be checked against the employer's current instruments before advice is given.
+- The site is public. Do not add confidential records, case details, private IDs, signatures or internal screenshots.

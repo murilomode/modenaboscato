@@ -1,8 +1,8 @@
-# Murilo Modena Boscato - Application Casebook
+# Murilo Boscato - HR Advisor Portfolio
 
-Professional application website focused on luxury food and beverage outlet management.
+Evidence-focused static website for HR Advisor, People & Culture and workforce operations applications.
 
-The site combines verified career experience with an independent business intelligence case covering outlet profitability, productivity, inventory control and service-quality guardrails.
+The site is tailored to the Chandler Macleod Human Resource Advisor role, reference 189221, and presents Murilo's local government people-operations experience through privacy-safe evidence, a case study and practical HR sample pack.
 
 ## Live Site
 
@@ -10,28 +10,22 @@ The site combines verified career experience with an independent business intell
 
 ## Project Highlights
 
-- Responsive, accessible static website
-- Professional profile and chronological experience
-- Downloadable CV
-- Independent **Outlet Performance Intelligence** case
-- Eight expandable **F&B Management Samples**
-- Print-friendly case layout
-- Custom-domain support for GitHub Pages
-- No framework, package installation or build step required
-
-## Important Scope Note
-
-All financial figures in the business intelligence case are hypothetical. They demonstrate analytical reasoning and are not Langham data, industry benchmarks or claimed professional results.
-
-Verified career statements and illustrative case assumptions are intentionally presented separately.
+- Responsive static website for GitHub Pages
+- Concise recruiter-facing homepage
+- Local government HR operations case study
+- Anonymised HR sample pack
+- Resume and cover letter downloads
+- Custom-domain support
+- No framework or build step required
 
 ## Project Structure
 
 ```text
 portfolio-site/
 |-- assets/
-|   |-- luxury-lobby-bar.webp
-|   |-- murilo-modena-boscato.png
+|   |-- murilo-boscato-profile.jpg
+|   |-- murilo-boscato-hr-advisor-resume.pdf
+|   |-- murilo-boscato-hr-advisor-cover-letter.pdf
 |   `-- murilo-modena-boscato-cv.pdf
 |-- docs/
 |   |-- CONTENT-MAINTENANCE.md
@@ -45,13 +39,16 @@ portfolio-site/
 |-- robots.txt
 |-- script.js
 |-- sitemap.xml
-|-- styles.css
 `-- work-sample.html
 ```
 
 ## Local Preview
 
-Open `index.html` in a browser. The site does not require a local server.
+Open `index.html` directly in a browser. The site does not require a local server.
+
+## Privacy Rule
+
+Do not publish raw HR records, employee names, employee IDs, salary details, signatures, internal system screenshots, tracked Word files or unsanitised PDFs. Public samples should remain anonymised, generalised or hypothetical.
 
 ## Publishing
 
@@ -59,17 +56,4 @@ See [GitHub Pages deployment](docs/DEPLOYMENT.md) for repository, Pages and cust
 
 ## Content Updates
 
-See [Content maintenance](docs/CONTENT-MAINTENANCE.md) before changing professional claims, availability, the CV or case assumptions.
-
-See [Implementation notes](docs/IMPLEMENTATION-NOTES.md) for the management samples, print behaviour and modelling assumptions.
-
-## Technology
-
-- Semantic HTML5
-- Responsive CSS
-- Vanilla JavaScript
-- GitHub Pages
-
-## Ownership
-
-The personal information, CV, portrait and written case material are provided for professional presentation. No reuse licence is granted by this repository.
+See [Content maintenance](docs/CONTENT-MAINTENANCE.md) before changing professional claims, availability, the CV, the cover letter or sample content.
