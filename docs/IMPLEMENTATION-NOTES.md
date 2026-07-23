@@ -24,6 +24,13 @@ The main positioning is:
 - `sitemap.xml`: public URLs for the three pages.
 - `README.md` and documentation.
 
+## Visual Direction
+
+- Display typography uses Manrope.
+- Body, navigation, labels and buttons use Inter.
+- Labels are mostly sentence case to avoid an overly corporate feel.
+- Metrics should remain visually stronger than supporting card labels.
+
 ## Preview Locally
 
 Open `index.html` directly in a browser. No build command or local server is required.
