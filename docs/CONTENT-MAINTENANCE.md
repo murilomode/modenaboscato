@@ -9,11 +9,12 @@ The current website states that Murilo:
 - has Australian work rights;
 - is available immediately for interviews;
 - is currently in Brazil;
-- is ready to relocate to NSW as soon as required;
-- coordinates personnel routines supporting 1,500+ employees;
-- works across seven municipal departments;
+- is ready to relocate to NSW or where required;
 - has 3+ years of HR administration and people operations experience;
 - has experience with employee records, attendance, leave information, payroll inputs, onboarding documentation, reporting and confidential follow-up;
+- helped reduce the monthly payroll close window from about two weeks to four working days;
+- handles 100+ employee records or files in a normal week;
+- helped move internal communication into 1Doc, reducing missed requests to near-zero;
 - speaks fluent English, advanced Spanish and native Portuguese.
 
 Review these statements whenever the CV, availability, visa situation or employment situation changes.
@@ -24,11 +25,10 @@ Preferred public paths:
 
 ```text
 assets/murilo-boscato-hr-advisor-resume.pdf
-assets/murilo-boscato-hr-advisor-cover-letter.pdf
 assets/murilo-modena-boscato-cv.pdf
 ```
 
-Check that the website, resume and cover letter agree on location, availability, work rights, job titles, dates and responsibilities.
+Check that the website and resume agree on location, availability, work rights, job titles, dates and responsibilities.
 
 ## Personal-Data Safety
 
@@ -42,7 +42,7 @@ Do not commit original certificates, identity documents or screenshots containin
 - visa documentation;
 - employee names, employee IDs or private HR case details.
 
-Only publish the portrait, resume and cover letter after confirming they are intentionally public.
+Only publish the portrait and resume after confirming they are intentionally public.
 
 ## Sample Content Rules
 
@@ -60,7 +60,7 @@ Use generalised workflows, fictional examples and aggregated descriptions.
 ## Final Review Checklist
 
 - Professional claims remain accurate.
-- Resume and cover letter links work.
+- Resume and sample links work.
 - No private document has been added.
 - Samples are clearly described as anonymised, generalised or hypothetical.
 - Images load correctly.

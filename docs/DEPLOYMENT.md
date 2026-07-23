@@ -49,7 +49,7 @@ Verify:
 - `https://modenaboscato.com/work-sample.html`
 - `https://modenaboscato.com/samples.html`
 - resume download;
-- cover letter download;
+- resume download;
 - email links;
 - mobile navigation;
 - print buttons;

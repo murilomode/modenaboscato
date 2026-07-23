@@ -2,7 +2,7 @@
 
 Evidence-focused static website for HR Advisor, People & Culture and workforce operations applications.
 
-The site is tailored to the Chandler Macleod Human Resource Advisor role, reference 189221, and presents Murilo's local government people-operations experience through privacy-safe evidence, a case study and practical HR sample pack.
+The site presents Murilo's local government people-operations experience through privacy-safe evidence, a case study and a practical HR sample pack.
 
 ## Live Site
 
@@ -14,7 +14,7 @@ The site is tailored to the Chandler Macleod Human Resource Advisor role, refere
 - Concise recruiter-facing homepage
 - Local government HR operations case study
 - Anonymised HR sample pack
-- Resume and cover letter downloads
+- Resume download
 - Custom-domain support
 - No framework or build step required
 
@@ -25,7 +25,6 @@ portfolio-site/
 |-- assets/
 |   |-- murilo-boscato-profile.jpg
 |   |-- murilo-boscato-hr-advisor-resume.pdf
-|   |-- murilo-boscato-hr-advisor-cover-letter.pdf
 |   `-- murilo-modena-boscato-cv.pdf
 |-- docs/
 |   |-- CONTENT-MAINTENANCE.md
@@ -56,4 +55,4 @@ See [GitHub Pages deployment](docs/DEPLOYMENT.md) for repository, Pages and cust
 
 ## Content Updates
 
-See [Content maintenance](docs/CONTENT-MAINTENANCE.md) before changing professional claims, availability, the CV, the cover letter or sample content.
+See [Content maintenance](docs/CONTENT-MAINTENANCE.md) before changing professional claims, availability, the CV or sample content.
