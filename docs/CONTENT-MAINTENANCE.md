@@ -11,7 +11,7 @@ The current website states that Murilo:
 - is currently in Brazil;
 - is ready to relocate to NSW or where required;
 - has 3+ years of HR administration and people operations experience;
-- has experience with employee records, attendance, leave information, payroll inputs, onboarding documentation, reporting and confidential follow-up;
+- has experience with HR advice, HRIS updates, employee records, attendance, leave information, payroll movements, onboarding documentation, workforce reporting and confidential follow-up;
 - helped reduce the monthly payroll close window from about two weeks to four working days;
 - handles 100+ employee records or files in a normal week;
 - helped move internal communication into 1Doc, reducing missed requests to near-zero;

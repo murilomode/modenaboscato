@@ -7,17 +7,18 @@ This site turns Murilo's CV into a short evidence portfolio for HR Advisor / Peo
 The main positioning is:
 
 - current local government personnel management work;
-- employee records, attendance, leave information and payroll inputs;
+- trusted HR advice to employees and managers;
+- HRIS workflow, data quality and workforce reporting;
+- employee records, attendance, leave information and payroll movements;
 - payroll close and monthly HR workflow improvement;
-- workforce reporting and data quality;
-- employee enquiries, department follow-up and process control;
-- confidentiality and careful handling of people information.
+- employee lifecycle administration and department follow-up;
+- confidential triage and careful handling of people information.
 
 ## Files Updated
 
 - `index.html`: concise recruiter-facing homepage and document links.
-- `work-sample.html`: payroll close and HR workflow improvement case.
-- `samples.html`: practical HR sample pack with specific mini-cases.
+- `work-sample.html`: HRIS workflow and payroll-ready data case.
+- `samples.html`: practical HR sample pack with specific advisory, reporting and process mini-cases.
 - `styles.css`: responsive layout, sample modules and print behaviour.
 - `script.js`: navigation, reveal, print and sample expand/collapse behaviour.
 - `sitemap.xml`: public URLs for the three pages.

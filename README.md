@@ -2,7 +2,7 @@
 
 Evidence-focused static website for HR Advisor, People & Culture and workforce operations applications.
 
-The site presents Murilo's local government people-operations experience through privacy-safe evidence, a case study and a practical HR sample pack.
+The site presents Murilo's local government people-operations experience through privacy-safe evidence, a case study and a practical HR sample pack focused on HR advice, HRIS, workforce reporting, employee lifecycle administration, payroll movements and confidential triage.
 
 ## Live Site
 
@@ -12,8 +12,8 @@ The site presents Murilo's local government people-operations experience through
 
 - Responsive static website for GitHub Pages
 - Concise recruiter-facing homepage
-- Local government HR operations case study
-- Anonymised HR sample pack
+- HRIS workflow and payroll-ready data case study
+- Anonymised HR sample pack with specific mini-cases
 - Resume download
 - Custom-domain support
 - No framework or build step required
