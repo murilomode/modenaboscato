@@ -1,16 +1,16 @@
 {
-  "name": "BUCETA LANCHES",
-  "short_name": "BL",
-  "description": "Hamburgueria em Xanxere com smash, combos e caos gourmet.",
-  "start_url": "./",
-  "display": "standalone",
-  "background_color": "#d7f0b5",
-  "theme_color": "#5fb74f",
+  "name": "Murilo Boscato | HR, Management & Operations",
+  "short_name": "Murilo Boscato",
+  "description": "Professional experience in HR, personnel coordination and administrative operations.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#f7f5f0",
+  "theme_color": "#132a3a",
   "icons": [
     {
-      "src": "assets/logo-original.png",
-      "sizes": "512x512",
-      "type": "image/png",
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
       "purpose": "any"
     }
   ]

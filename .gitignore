@@ -1,0 +1,7 @@
+# Local previews and generated deliverables
+__pycache__/
+.DS_Store
+Thumbs.db
+*.log
+/output_gemini/
+/*.zip
