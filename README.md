@@ -17,4 +17,5 @@ See DESIGN.md for visual rules, docs/CONTENT-MAINTENANCE.md for factual checks a
 
 No analytics, contact backend or cookie banner is introduced. Contact uses email links.
 
-Unrelated generated images, restaurant assets, flag scripts and deployment archives were removed from the proposed branch. Earlier versions remain in Git history; history was not rewritten. See docs/CLEANUP.md.
+The unused output_gemini directory (303 generated images) was removed. Other legacy files are still awaiting cleanup. Earlier versions remain in Git history; history was not rewritten.
+
